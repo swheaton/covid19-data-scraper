@@ -2,6 +2,9 @@ import pandas as pd
 import yaml
 import numpy as np
 
+import requests
+
+
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
     if attr in config:
@@ -19,14 +22,25 @@ with open('stateConfig.yml') as configFile:
 
         tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
 
-        df = pd.read_html(stateConfig['url'], skiprows=headerRowsToSkip, header=0)[tableIndex]
+        # Doing this to look more like a browser so we won't get denied.
+        header = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        r = requests.get(stateConfig['url'], headers=header)
+        df = pd.read_html(r.text, skiprows=headerRowsToSkip, header=0)[tableIndex]
 
         # Drop last (total col) if needed
         footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
         if footerRowsToSkip != 0:
             df = df[:-footerRowsToSkip]
 
+        # Zero-width space used by Pennsylvania...
+        assert isinstance(df.columns.str, object)
+        df.columns = df.columns.str.replace('\u200b', '')
+
         print(df)
+        print(df.columns)
 
         countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
         casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
@@ -35,7 +49,9 @@ with open('stateConfig.yml') as configFile:
 
         print(df)
 
-        # Extract number if cases col is string
+        # Extract number if cases col is string.
+        #   And also zero-width space first...
+        df['Cases'] = df['Cases'].str.replace('\u200b', '')
         if df['Cases'].dtype == np.object:
             df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
 
@@ -46,12 +62,16 @@ with open('stateConfig.yml') as configFile:
         if 'Deaths' not in df:
             df['Deaths'] = 0
         else:
+            df['Deaths'] = df['Deaths'].str.replace('\u200b', '')
+            df['Deaths'].replace('', 0, inplace=True)
             df['Deaths'].fillna(0, inplace=True)
 
         # Add recovered column if not present
         if 'Recovered' not in df:
             df['Recovered'] = 0
         else:
+            df['Recovered'] = df['Recovered'].str.replace('\u200b', '')
+            df['Recovered'].replace('', 0, inplace=True)
             df['Recovered'].fillna(0, inplace=True)
 
         df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})

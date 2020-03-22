@@ -34,9 +34,28 @@ states:
 #  Mississippi:
 #    url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
 #    footerRowsToSkip: 1
-  Missouri:
-    url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
-    casesCol: 'Total'
+#  Missouri:
+#    url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
+#    casesCol: 'Total'
+#  New Mexico:
+#    url: 'https://cv.nmhealth.org/cases-by-county/'
+#  New York:
+#    url: 'https://coronavirus.health.ny.gov/county-county-breakdown-positive-cases'
+#    casesCol: 'Positive Cases'
+#    footerRowsToSkip: 1
+#  Oklahoma:
+#    url: 'https://coronavirus.health.ok.gov'
+#    footerRowsToSkip: 1
+#    casesCol: 'COVID-19 Cases by County*'
+#    tableIndex: 3
+#  Oregon:
+#    url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
+#    casesCol: 'Number of cases'
+#    footerRowsToSkip: 1
+#    tableIndex: 1
+  Pennsylvania:
+    url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
+    tableIndex: 1
 
 nopage:
   Arizona
@@ -44,6 +63,9 @@ nopage:
   California
   Colorado
   Kentucky
+  Nebraska
+  Nevada
+  New Hampshire
 
 pdf:
   Connecticut
@@ -61,3 +83,7 @@ other:
   Louisiana 'http://ldh.la.gov/Coronavirus'
   Maryland 'https://coronavirus.maryland.gov/'
   Montana 'https://montana.maps.arcgis.com/apps/MapSeries/index.html?appid=7c34f3412536439491adcc2103421d4b'
+  New Jersey 'https://covid19.nj.gov/#live-updates'
+  North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
+  North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+  Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
