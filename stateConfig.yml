@@ -1,0 +1,26 @@
+---
+states:
+#  Alabama:
+#    url: 'http://alabamapublichealth.gov/infectiousdiseases/2019-coronavirus.html'
+#    skiprows: 1
+#    countyRow: 'County of Residence'
+#    totalColumn: true
+#    casesColumn: 'Cases'
+#  Michigan:
+#    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
+#    skiprows: 0
+#    countyRow: 'County'
+#    totalColumn: true
+#    casesColumn: 'Cases'
+#  Alaska:
+#    url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
+#    skiprows: 0
+#    countyRow: 'Region'
+#    totalColumn: true
+#    casesColumn: 'Total'
+    Alaska:
+      url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
+      skiprows: 0
+      countyRow: 'Region'
+      totalColumn: true
+      casesColumn: 'Total'
