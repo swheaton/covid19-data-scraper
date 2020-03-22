@@ -1,23 +1,43 @@
 import pandas as pd
 import yaml
-import datetime as dt
+import numpy as np
+
+def getOrDefault(config: object, attr: object, default: object) -> object:
+    retValue = default
+    if attr in config:
+        retValue = config[attr]
+    return retValue
 
 with open('stateConfig.yml') as configFile:
     configs = yaml.safe_load(configFile)
-    print(configs)
 
     aggrDf = pd.DataFrame()
     for state in configs['states']:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
-        skiprows = 0
-        if 'skiprows' in stateConfig:
-            skiprows = stateConfig['skiprows']
+        headerRowsToSkip = getOrDefault(stateConfig, 'headerRowsToSkip', 0)
 
-        df = pd.read_html(stateConfig['url'], skiprows=skiprows, header=0)[0]
+        tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
 
-        columnRename = {stateConfig['countyRow']: 'County', stateConfig['casesColumn']: 'Cases'}
+        df = pd.read_html(stateConfig['url'], skiprows=headerRowsToSkip, header=0)[tableIndex]
+
+        # Drop last (total col) if needed
+        footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
+        if footerRowsToSkip != 0:
+            df = df[:-footerRowsToSkip]
+
+        print(df)
+
+        countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
+        casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
+        columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
         df.rename(columns=columnRename, inplace=True)
+
+        print(df)
+
+        # Extract number if cases col is string
+        if df['Cases'].dtype == np.object:
+            df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
 
         # Remove all extraneous columns
         df.drop(df.columns.difference(['County','Cases', 'Deaths', 'Recovered']), axis=1, inplace=True)
@@ -41,10 +61,6 @@ with open('stateConfig.yml') as configFile:
 
         # Reorder columns
         df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
-
-        # Drop last (total col) if needed
-        if stateConfig['totalColumn']:
-            df = df[:-1]
 
         print (df.describe())
         print(df.dtypes)

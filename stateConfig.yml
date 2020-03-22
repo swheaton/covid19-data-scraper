@@ -2,25 +2,41 @@
 states:
 #  Alabama:
 #    url: 'http://alabamapublichealth.gov/infectiousdiseases/2019-coronavirus.html'
-#    skiprows: 1
-#    countyRow: 'County of Residence'
-#    totalColumn: true
-#    casesColumn: 'Cases'
+#    headerRowsToSkip: 1
+#    countyCol: 'County of Residence'
+#    footerRowsToSkip: 1
 #  Michigan:
 #    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
-#    skiprows: 0
-#    countyRow: 'County'
-#    totalColumn: true
-#    casesColumn: 'Cases'
+#    footerRowsToSkip: 1
 #  Alaska:
 #    url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
-#    skiprows: 0
-#    countyRow: 'Region'
-#    totalColumn: true
-#    casesColumn: 'Total'
-    Alaska:
-      url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
-      skiprows: 0
-      countyRow: 'Region'
-      totalColumn: true
-      casesColumn: 'Total'
+#    countyCol: 'Region'
+#    footerRowsToSkip: 1
+#    casesCol: 'Total'
+#  Georgia:
+#    url: 'https://dph.georgia.gov/covid-19-daily-status-report'
+#    tableIndex: 2
+#  Hawaii:
+#    url: 'https://health.hawaii.gov/docd/advisories/novel-coronavirus-2019/'
+#    headerRowsToSkip: 2
+#    footerRowsToSkip: 4
+#    casesCol: 'Unnamed: 1'
+#  Idaho:
+#    url: 'https://coronavirus.idaho.gov/'
+#    footerRowsToSkip: 1
+
+nopage:
+  Arizona
+  Arkansas
+  California
+  Colorado
+
+pdf:
+  Connecticut
+  Florida 'https://floridadisaster.org/globalassets/covid19/dailies/covid-19-data---daily-report-2020-03-22-0951.pdf'
+
+other:
+  Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
+  Delaware 'https://dshs.maps.arcgis.com/apps/opsdashboard/index.html#/5192d194ef654878b805cf6a5d99169d'
+  DC 'https://coronavirus.dc.gov/page/coronavirus-data'
+  Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
