@@ -5,9 +5,6 @@ states:
 #    headerRowsToSkip: 1
 #    countyCol: 'County of Residence'
 #    footerRowsToSkip: 1
-#  Michigan:
-#    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
-#    footerRowsToSkip: 1
 #  Alaska:
 #    url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
 #    countyCol: 'Region'
@@ -24,19 +21,43 @@ states:
 #  Idaho:
 #    url: 'https://coronavirus.idaho.gov/'
 #    footerRowsToSkip: 1
+#  Maine:
+#    url: 'https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml'
+#    tableIndex: 1
+#    headerRowsToSkip: 2
+#    casesCol: 'Confirmed'
+#  Michigan:
+#    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
+#    footerRowsToSkip: 1
+#  Minnesota:
+#    url: 'https://www.health.state.mn.us/diseases/coronavirus/situation.html'
+#  Mississippi:
+#    url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
+#    footerRowsToSkip: 1
+  Missouri:
+    url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
+    casesCol: 'Total'
 
 nopage:
   Arizona
   Arkansas
   California
   Colorado
+  Kentucky
 
 pdf:
   Connecticut
   Florida 'https://floridadisaster.org/globalassets/covid19/dailies/covid-19-data---daily-report-2020-03-22-0951.pdf'
+  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf'
+  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download'
 
 other:
   Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   Delaware 'https://dshs.maps.arcgis.com/apps/opsdashboard/index.html#/5192d194ef654878b805cf6a5d99169d'
   DC 'https://coronavirus.dc.gov/page/coronavirus-data'
   Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
+  Indiana 'https://www.in.gov/coronavirus/2393.htm'
+  Iowa 'https://idph.iowa.gov/Emerging-Health-Issues/Novel-Coronavirus'
+  Louisiana 'http://ldh.la.gov/Coronavirus'
+  Maryland 'https://coronavirus.maryland.gov/'
+  Montana 'https://montana.maps.arcgis.com/apps/MapSeries/index.html?appid=7c34f3412536439491adcc2103421d4b'
