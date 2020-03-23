@@ -111,3 +111,13 @@ other:
   West Virginia 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
   Wisconsin 'https://www.dhs.wisconsin.gov/outbreaks/index.htm'
   Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
+  Puerto Rico 'https://estadisticas.pr/en/covid-19'
+  Guam 'http://dphss.guam.gov/2019-novel-coronavirus-2019-n-cov/'
+  US Virgin Islands 'https://doh.vi.gov/'
+
+none:
+  Northern Mariana Islands
+  American Samoa
+  Republic of Palau
+  Micronesia
+  Marshall Islands
