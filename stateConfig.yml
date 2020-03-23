@@ -10,6 +10,14 @@ states:
 #    countyCol: 'Region'
 #    footerRowsToSkip: 1
 #    casesCol: 'Total'
+#  Delaware:
+#    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME%3D%27{XXXXXX}%27&returnGeometry=false&outFields=*'
+#    type: 'api-json'
+#    countyDelim: '{XXXXXX}'
+#    counties:
+#      - Kent
+#      - New Castle
+#      - Sussex
 #  Georgia:
 #    url: 'https://dph.georgia.gov/covid-19-daily-status-report'
 #    tableIndex: 2
@@ -72,17 +80,18 @@ states:
 #    countyCol: 'County of Residence2'
 #    tableIndex: 2
 
+
 nopage:
-  Arizona
-  Arkansas
-  California
-  Colorado
-  Kentucky
-  Nebraska
-  Nevada
-  New Hampshire
-  Rhode Island
-  Vermont
+  - Arizona
+  - Arkansas
+  - California
+  - Colorado
+  - Kentucky
+  - Nebraska
+  - Nevada
+  - New Hampshire
+  - Rhode Island
+  - Vermont
 
 pdf:
   Connecticut
@@ -92,7 +101,6 @@ pdf:
 
 other:
   Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
-  Delaware 'https://dshs.maps.arcgis.com/apps/opsdashboard/index.html#/5192d194ef654878b805cf6a5d99169d'
   DC 'https://coronavirus.dc.gov/page/coronavirus-data'
   Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
   Indiana 'https://www.in.gov/coronavirus/2393.htm'
