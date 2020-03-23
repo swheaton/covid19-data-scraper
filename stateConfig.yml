@@ -53,9 +53,24 @@ states:
 #    casesCol: 'Number of cases'
 #    footerRowsToSkip: 1
 #    tableIndex: 1
-  Pennsylvania:
-    url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
-    tableIndex: 1
+#  Pennsylvania:
+#    url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
+#    tableIndex: 1
+#  South Dakota:
+#    url: 'https://doh.sd.gov/news/Coronavirus.aspx'
+#    tableIndex: 2
+#    casesCol: '# of Cases'
+#    footerRowsToSkip: 1
+#  Tennessee:
+#    url: 'https://www.tn.gov/health/cedep/ncov.html'
+#    casesCol: 'Count'
+#    tableIndex: 1
+#    footerRowsToSkip: 1
+#  Texas:
+#    url: 'https://www.dshs.state.tx.us/news/updates.shtm#coronavirus'
+#    casesCol: 'Number of Cases3'
+#    countyCol: 'County of Residence2'
+#    tableIndex: 2
 
 nopage:
   Arizona
@@ -66,6 +81,8 @@ nopage:
   Nebraska
   Nevada
   New Hampshire
+  Rhode Island
+  Vermont
 
 pdf:
   Connecticut
@@ -87,3 +104,10 @@ other:
   North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
   North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
   Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
+  South Carolina 'https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/monitoring-testing-covid-19, https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/additional-data-covid-19'
+  Utah 'https://coronavirus.utah.gov/case-counts/'
+  Virginia 'http://www.vdh.virginia.gov/coronavirus/'
+  Washington 'https://www.doh.wa.gov/Emergencies/Coronavirus'
+  West Virginia 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
+  Wisconsin 'https://www.dhs.wisconsin.gov/outbreaks/index.htm'
+  Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'

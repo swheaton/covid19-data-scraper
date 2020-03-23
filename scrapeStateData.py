@@ -1,8 +1,9 @@
 import pandas as pd
 import yaml
 import numpy as np
-
+import ssl
 import requests
+import urllib
 
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
@@ -20,15 +21,24 @@ with open('stateConfig.yml') as configFile:
         stateConfig = configs['states'][state]
         headerRowsToSkip = getOrDefault(stateConfig, 'headerRowsToSkip', 0)
 
-        tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
-
         # Doing this to look more like a browser so we won't get denied.
         header = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
             "X-Requested-With": "XMLHttpRequest"
         }
-        r = requests.get(stateConfig['url'], headers=header)
-        df = pd.read_html(r.text, skiprows=headerRowsToSkip, header=0)[tableIndex]
+        r = None
+        html = None
+        try:
+            r = requests.get(stateConfig['url'], headers=header)
+            html = r.text
+        except requests.exceptions.SSLError:
+            print('SSLError, trying to fake SSL context')
+            context = ssl._create_unverified_context()
+            r = urllib.request.urlopen(stateConfig['url'], context=context)
+            html = r.read()
+
+        tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
+        df = pd.read_html(html, skiprows=headerRowsToSkip, header=0)[tableIndex]
 
         # Drop last (total col) if needed
         footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
@@ -51,8 +61,8 @@ with open('stateConfig.yml') as configFile:
 
         # Extract number if cases col is string.
         #   And also zero-width space first...
-        df['Cases'] = df['Cases'].str.replace('\u200b', '')
         if df['Cases'].dtype == np.object:
+            df['Cases'] = df['Cases'].str.replace('\u200b', '')
             df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
 
         # Remove all extraneous columns
