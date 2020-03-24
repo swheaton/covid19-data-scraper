@@ -15,6 +15,10 @@ For any implemented method below, each state is completely configurable in [yaml
 - Tableau app
 - County-level page scraping
 
+## Progress
+- 29 / 50 US states
+- 0 / 9 districts, territories, and freely associated states
+
 ## Python Modules Used
 - pandas
 - yaml
