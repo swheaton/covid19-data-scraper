@@ -151,6 +151,7 @@ nopage:
 
 jsrender:
   - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
+  - Utah 'https://coronavirus.utah.gov/case-counts/'
 
 pdf:
   Connecticut
@@ -169,8 +170,6 @@ text:
   - Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
 
 other:
-  South Carolina 'https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/monitoring-testing-covid-19, https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/additional-data-covid-19'
-  Utah 'https://coronavirus.utah.gov/case-counts/'
   Virginia 'http://www.vdh.virginia.gov/coronavirus/'
   Washington 'https://www.doh.wa.gov/Emergencies/Coronavirus'
   West Virginia 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
