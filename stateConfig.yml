@@ -125,7 +125,7 @@ states:
     url: 'https://coronavirus.health.ok.gov'
     footerRowsToSkip: 1
     casesCol: 'COVID-19 Cases by County*'
-    tableIndex: 3
+    tableIndex: 4
   Oregon:
     type: 'table'
     url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
@@ -159,7 +159,7 @@ states:
   Texas:
     type: 'table'
     url: 'https://www.dshs.state.tx.us/news/updates.shtm#coronavirus'
-    casesCol: 'Number of Cases3'
+    casesCol: 'Cases3'
     countyCol: 'County of Residence2'
     tableIndex: 2
   Wisconsin:

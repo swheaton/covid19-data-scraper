@@ -75,6 +75,7 @@ def scrapeHtmlTable(stateConfig):
         if df['Deaths'].dtype == np.object:
             df['Deaths'] = df['Deaths'].str.replace('\u200b', '')
             df['Deaths'].replace('', 0, inplace=True)
+            df['Deaths'].replace('-', 0, inplace=True)
         df['Deaths'].fillna(0, inplace=True)
 
     # Add recovered column if not present
@@ -85,6 +86,7 @@ def scrapeHtmlTable(stateConfig):
         if df['Recovered'].dtype == np.object:
             df['Recovered'] = df['Recovered'].str.replace('\u200b', '')
             df['Recovered'].replace('', 0, inplace=True)
+            df['Recovered'].replace('-', 0, inplace=True)
         df['Recovered'].fillna(0, inplace=True)
 
     df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
