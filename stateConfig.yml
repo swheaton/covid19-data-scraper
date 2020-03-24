@@ -152,15 +152,12 @@ states:
 #    casesDpath: 'attributes/POSITIVE'
 #    deathsDpath: 'attributes/DEATHS'
 
-nopage:
-  - Arkansas
+labnotcounty:
+  - Nevada 'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9'
+
+nocountyinfo:
   - California
-  - Colorado
-  - Kentucky
-  - Nebraska
-  - Nevada
-  - New Hampshire
-  - Vermont
+  - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
 
 csv:
   - Rhode Island 'https://docs.google.com/spreadsheets/d/1n-zMS9Al94CPj_Tc3K7Adin-tN9x1RSjjx2UzJ4SV7Q/edit#gid=973023523'
@@ -171,6 +168,7 @@ jsrender:
   - Washington 'https://www.doh.wa.gov/Emergencies/Coronavirus'
 
 pdf:
+  New Hampshire 'https://www.nh.gov/covid19/'
   Connecticut
   Florida 'https://floridadisaster.org/globalassets/covid19/dailies/covid-19-data---daily-report-2020-03-22-0951.pdf'
   Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf'
@@ -183,6 +181,8 @@ tableau:
 
 image:
   - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+  - Kentucky 'https://govstatus.egov.com/kycovid19'
+  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus'
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
@@ -195,7 +195,7 @@ uncategorized:
   Guam 'http://dphss.guam.gov/2019-novel-coronavirus-2019-n-cov/'
   US Virgin Islands 'https://doh.vi.gov/'
 
-none:
+nocases:
   Northern Mariana Islands
   American Samoa
   Republic of Palau
