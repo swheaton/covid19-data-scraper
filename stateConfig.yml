@@ -56,14 +56,14 @@ states:
 #    tableIndex: 1
 #    headerRowsToSkip: 2
 #    casesCol: 'Confirmed'
-  Maryland:
-    type: 'api-json'
-    url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/COVID19_MD_CountyCaseCounts_DEMO/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/COUNTY'
-    casesDpath: 'attributes/COVID19Cases'
-    deathsDpath: 'attributes/COVID19Deaths'
-    recoveredDpath: 'attributes/COVID19Recovered'
+#  Maryland:
+#    type: 'api-json'
+#    url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/COVID19_MD_CountyCaseCounts_DEMO/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/COUNTY'
+#    casesDpath: 'attributes/COVID19Cases'
+#    deathsDpath: 'attributes/COVID19Deaths'
+#    recoveredDpath: 'attributes/COVID19Recovered'
 #  Michigan:
 #    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
 #    footerRowsToSkip: 1
@@ -81,6 +81,12 @@ states:
 #    countyListDpath: 'features'
 #    countyDpath: 'attributes/NAMELABEL'
 #    casesDpath: 'attributes/Total'
+#  New Jersey:
+#    type: 'api-json'
+#    url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/COUNTY_LAB'
+#    casesDpath: 'attributes/COUNTS'
 #  New Mexico:
 #    url: 'https://cv.nmhealth.org/cases-by-county/'
 #  New York:
@@ -142,8 +148,7 @@ map:
 
 other:
   DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  Maryland 'https://coronavirus.maryland.gov/'
-  New Jersey 'https://covid19.nj.gov/#live-updates'
+  New Jersey 'https://covid19.nj.gov/'
   North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
   North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
   Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
