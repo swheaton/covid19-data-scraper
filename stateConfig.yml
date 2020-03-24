@@ -10,6 +10,14 @@ states:
 #    countyCol: 'Region'
 #    footerRowsToSkip: 1
 #    casesCol: 'Total'
+#  Arkansas:
+#    type: 'api-json'
+#    url: 'https://services.arcgis.com/PwY9ZuZRDiI5nXUB/ArcGIS/rest/services/ADH_COVID19_Positive_Test_Results/FeatureServer/0/query?f=json&where=county_nam%3C%3E%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/county_nam'
+#    casesDpath: 'attributes/positive'
+#    deathsDpath: 'attributes/deaths'
+#    recoveredDpath: 'attributes/Recoveries'
 #  Delaware:
 #    type: 'api-json'
 #    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
@@ -145,7 +153,6 @@ states:
 #    deathsDpath: 'attributes/DEATHS'
 
 nopage:
-  - Arizona
   - Arkansas
   - California
   - Colorado
@@ -153,8 +160,10 @@ nopage:
   - Nebraska
   - Nevada
   - New Hampshire
-  - Rhode Island
   - Vermont
+
+csv:
+  - Rhode Island 'https://docs.google.com/spreadsheets/d/1n-zMS9Al94CPj_Tc3K7Adin-tN9x1RSjjx2UzJ4SV7Q/edit#gid=973023523'
 
 jsrender:
   - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
@@ -168,6 +177,7 @@ pdf:
   Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download'
 
 tableau:
+  - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
   - Virginia 'http://www.vdh.virginia.gov/coronavirus/'
 
@@ -178,10 +188,9 @@ text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
   - Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
   - West Virginia 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
+  - Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
 
-other:
-  Wisconsin 'https://www.dhs.wisconsin.gov/outbreaks/index.htm'
-  Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
+uncategorized:
   Puerto Rico 'https://estadisticas.pr/en/covid-19'
   Guam 'http://dphss.guam.gov/2019-novel-coronavirus-2019-n-cov/'
   US Virgin Islands 'https://doh.vi.gov/'
