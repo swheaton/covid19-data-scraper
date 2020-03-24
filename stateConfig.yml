@@ -10,14 +10,15 @@ states:
 #    countyCol: 'Region'
 #    footerRowsToSkip: 1
 #    casesCol: 'Total'
-#  Delaware:
-#    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME%3D%27{XXXXXX}%27&returnGeometry=false&outFields=*'
-#    type: 'api-json'
-#    countyDelim: '{XXXXXX}'
-#    counties:
-#      - Kent
-#      - New Castle
-#      - Sussex
+  Delaware:
+    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
+    type: 'api-json'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/NAME'
+    casesDpath: 'attributes/Presumptive_Positive'
+    deathsDpath: 'attributes/Total_Death'
+    recoveredDpath: 'attributes/Recovered'
+
 #  Georgia:
 #    url: 'https://dph.georgia.gov/covid-19-daily-status-report'
 #    tableIndex: 2

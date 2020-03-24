@@ -5,6 +5,7 @@ import ssl
 import requests
 import urllib
 import json
+import dpath.util
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -102,19 +103,20 @@ def scrapeHtmlTable(stateConfig):
 def scrapeApiJson(stateConfig, state):
     df = pd.DataFrame()
 
-    for county in stateConfig['counties']:
-        print(county)
-        url = stateConfig['url'].replace(stateConfig['countyDelim'], county)
-        jsonResult = json.loads(getSiteContent(url))
-        numCases = jsonResult['features'][0]['attributes']['Presumptive_Positive']
-        numDeaths = jsonResult['features'][0]['attributes']['Total_Death']
-        numRecovered = jsonResult['features'][0]['attributes']['Recovered']
+    jsonResult = json.loads(getSiteContent(stateConfig['url']))
+
+    for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
+        county = dpath.util.get(countyJson, stateConfig['countyDpath'])
+        numCases = dpath.util.get(countyJson, stateConfig['casesDpath'])
+        numDeaths = dpath.util.get(countyJson, stateConfig['deathsDpath'])
+        numRecovered = dpath.util.get(countyJson, stateConfig['recoveredDpath'])
         df = df.append( {
                 'County' : county ,
                 'State' : state,
-                'Cases': int(numCases),
-                'Deaths': numDeaths,
-                'Recovered': numRecovered if numRecovered else 0} , ignore_index=True)
+                'Cases': numCases or 0,
+                'Deaths': numDeaths or 0,
+                'Recovered': numRecovered or 0} , ignore_index=True)
+
     df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
     df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
