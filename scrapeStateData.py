@@ -125,6 +125,7 @@ def scrapeApiJson(stateConfig, state):
 
 
 with open('stateConfig.yml') as configFile:
+    pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
 
     aggrDf = pd.DataFrame()
