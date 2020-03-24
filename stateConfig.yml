@@ -44,18 +44,26 @@ states:
 #    casesDpath: 'attributes/Confirmed'
 #    deathsDpath: 'attributes/Deaths'
 #    recoveredDpath: 'attributes/Recovered'
-  Lousiana:
-    type: 'api-json'
-    url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/Parish'
-    casesDpath: 'attributes/Cases'
-    deathsDpath: 'attributes/Deaths'
+#  Lousiana:
+#    type: 'api-json'
+#    url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/Parish'
+#    casesDpath: 'attributes/Cases'
+#    deathsDpath: 'attributes/Deaths'
 #  Maine:
 #    url: 'https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml'
 #    tableIndex: 1
 #    headerRowsToSkip: 2
 #    casesCol: 'Confirmed'
+  Maryland:
+    type: 'api-json'
+    url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/COVID19_MD_CountyCaseCounts_DEMO/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/COUNTY'
+    casesDpath: 'attributes/COVID19Cases'
+    deathsDpath: 'attributes/COVID19Deaths'
+    recoveredDpath: 'attributes/COVID19Recovered'
 #  Michigan:
 #    url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
 #    footerRowsToSkip: 1
@@ -134,7 +142,6 @@ map:
 
 other:
   DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  Louisiana 'http://ldh.la.gov/Coronavirus'
   Maryland 'https://coronavirus.maryland.gov/'
   New Jersey 'https://covid19.nj.gov/#live-updates'
   North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
