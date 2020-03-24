@@ -93,6 +93,13 @@ states:
 #    url: 'https://coronavirus.health.ny.gov/county-county-breakdown-positive-cases'
 #    casesCol: 'Positive Cases'
 #    footerRowsToSkip: 1
+#  North Carolina:
+#    type: 'api-json'
+#    url: 'https://services.arcgis.com/iFBq2AW9XO0jYYF7/arcgis/rest/services/NCCovid19/FeatureServer/0/query?f=json&where=county%3C%3E%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/County'
+#    casesDpath: 'attributes/Total'
+#    deathsDpath: 'attributes/Deaths'
 #  Oklahoma:
 #    url: 'https://coronavirus.health.ok.gov'
 #    footerRowsToSkip: 1
@@ -148,7 +155,6 @@ map:
 
 other:
   DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  New Jersey 'https://covid19.nj.gov/'
   North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
   North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
   Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
