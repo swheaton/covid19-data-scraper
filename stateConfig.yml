@@ -113,6 +113,14 @@ states:
 #  Pennsylvania:
 #    url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
 #    tableIndex: 1
+#  South Carolina:
+#    type: 'api-json'
+#    url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/COVID19_County_View/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/NAME'
+#    casesDpath: 'attributes/Confirmed'
+#    deathsDpath: 'attributes/Death'
+#    recoveredDpath: 'attributes/Recovered'
 #  South Dakota:
 #    url: 'https://doh.sd.gov/news/Coronavirus.aspx'
 #    tableIndex: 2
@@ -153,11 +161,14 @@ pdf:
 map:
   - Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
 
+image:
+  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+
+text:
+  - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
+  - Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
+
 other:
-  DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  North Carolina 'https://www.ncdhhs.gov/covid-19-case-count-nc'
-  North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
-  Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
   South Carolina 'https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/monitoring-testing-covid-19, https://www.scdhec.gov/infectious-diseases/viruses/coronavirus-disease-2019-covid-19/additional-data-covid-19'
   Utah 'https://coronavirus.utah.gov/case-counts/'
   Virginia 'http://www.vdh.virginia.gov/coronavirus/'
