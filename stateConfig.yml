@@ -10,15 +10,14 @@ states:
 #    countyCol: 'Region'
 #    footerRowsToSkip: 1
 #    casesCol: 'Total'
-  Delaware:
-    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
-    type: 'api-json'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/NAME'
-    casesDpath: 'attributes/Presumptive_Positive'
-    deathsDpath: 'attributes/Total_Death'
-    recoveredDpath: 'attributes/Recovered'
-
+#  Delaware:
+#    type: 'api-json'
+#    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
+#    countyListDpath: 'features'
+#    countyDpath: 'attributes/NAME'
+#    casesDpath: 'attributes/Presumptive_Positive'
+#    deathsDpath: 'attributes/Total_Death'
+#    recoveredDpath: 'attributes/Recovered'
 #  Georgia:
 #    url: 'https://dph.georgia.gov/covid-19-daily-status-report'
 #    tableIndex: 2
@@ -46,6 +45,12 @@ states:
 #  Missouri:
 #    url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
 #    casesCol: 'Total'
+  Montana:
+    type: 'api-json'
+    url: 'https://services.arcgis.com/qnjIrwR8z5Izc0ij/arcgis/rest/services/PUBLIC_VIEW_COVID19_CASES/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/NAMELABEL'
+    casesDpath: 'attributes/Total'
 #  New Mexico:
 #    url: 'https://cv.nmhealth.org/cases-by-county/'
 #  New York:
@@ -80,7 +85,6 @@ states:
 #    casesCol: 'Number of Cases3'
 #    countyCol: 'County of Residence2'
 #    tableIndex: 2
-
 
 nopage:
   - Arizona
