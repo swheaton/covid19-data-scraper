@@ -6,6 +6,7 @@ import requests
 import urllib
 import json
 import dpath.util
+import sys
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -75,16 +76,20 @@ def scrapeHtmlTable(stateConfig):
     if 'Deaths' not in df:
         df['Deaths'] = 0
     else:
-        df['Deaths'] = df['Deaths'].str.replace('\u200b', '')
-        df['Deaths'].replace('', 0, inplace=True)
+        df['Deaths'] = df['Deaths']
+        if df['Deaths'].dtype == np.object:
+            df['Deaths'] = df['Deaths'].str.replace('\u200b', '')
+            df['Deaths'].replace('', 0, inplace=True)
         df['Deaths'].fillna(0, inplace=True)
 
     # Add recovered column if not present
     if 'Recovered' not in df:
         df['Recovered'] = 0
     else:
-        df['Recovered'] = df['Recovered'].str.replace('\u200b', '')
-        df['Recovered'].replace('', 0, inplace=True)
+        df['Recovered'] = df['Recovered']
+        if df['Recovered'].dtype == np.object:
+            df['Recovered'] = df['Recovered'].str.replace('\u200b', '')
+            df['Recovered'].replace('', 0, inplace=True)
         df['Recovered'].fillna(0, inplace=True)
 
     df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
@@ -128,13 +133,21 @@ with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
 
+    # if specified on command line, do only those states. otherwise do all
+    states = configs['states']
+    if len(sys.argv) > 1:
+        states = sys.argv[1:]
+
     aggrDf = pd.DataFrame()
-    for state in configs['states']:
+    for state in states:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
 
-        df = pd.DataFrame()
         if 'type' not in stateConfig or stateConfig['type'] == 'table':
-            df = scrapeHtmlTable(stateConfig)
+            statedf = scrapeHtmlTable(stateConfig)
         elif stateConfig['type'] == 'api-json':
-            df = scrapeApiJson(stateConfig, state)
+            statedf = scrapeApiJson(stateConfig, state)
+        else:
+            statedf = DataFrame()
+        aggrDf.append(statedf)
+    print(aggrDf)
