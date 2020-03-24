@@ -154,7 +154,7 @@ states:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     casesCol: 'Count'
-    tableIndex: 1
+    tableIndex: 3
     footerRowsToSkip: 1
   Texas:
     type: 'table'

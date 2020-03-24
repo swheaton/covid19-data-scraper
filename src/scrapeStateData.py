@@ -53,15 +53,10 @@ def scrapeHtmlTable(stateConfig):
     assert isinstance(df.columns.str, object)
     df.columns = df.columns.str.replace('\u200b', '')
 
-    print(df)
-    print(df.columns)
-
     countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
     casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
     df.rename(columns=columnRename, inplace=True)
-
-    print(df)
 
     # Extract number if cases col is string.
     #   And also zero-width space first...
@@ -100,9 +95,6 @@ def scrapeHtmlTable(stateConfig):
     # Reorder columns
     df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
-    print(df.describe())
-    print(df.dtypes)
-    print(df)
     return df
 
 def scrapeApiJson(stateConfig, state):
@@ -125,7 +117,6 @@ def scrapeApiJson(stateConfig, state):
     df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
     df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
-    print(df)
     return df
 
 
@@ -138,6 +129,7 @@ with open('stateConfig.yml') as configFile:
     if len(sys.argv) > 1:
         states = sys.argv[1:]
 
+    # Process each state
     aggrDf = pd.DataFrame()
     for state in states:
         print('DOING STATE', state)
@@ -148,6 +140,11 @@ with open('stateConfig.yml') as configFile:
         elif stateConfig['type'] == 'api-json':
             statedf = scrapeApiJson(stateConfig, state)
         else:
-            statedf = DataFrame()
-        aggrDf.append(statedf)
+            statedf = pd.DataFrame()
+
+        print(statedf)
+        print(statedf.dtypes)
+        aggrDf = aggrDf.append(statedf)
     print(aggrDf)
+    aggrDf.to_csv('data/out.csv', index=False)
+    print("Saved to out.csv")
