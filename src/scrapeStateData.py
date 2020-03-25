@@ -7,6 +7,7 @@ import urllib
 import json
 import dpath.util
 import sys
+from lxml import html as htmlparse
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -37,7 +38,7 @@ def getSiteContent(url):
         content = r.read()
     return content
 
-def scrapeHtmlTable(stateConfig):
+def scrapeHtmlTable(stateConfig, state):
     html = getSiteContent(stateConfig['url'])
 
     tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
@@ -89,13 +90,8 @@ def scrapeHtmlTable(stateConfig):
             df['Recovered'].replace('-', 0, inplace=True)
         df['Recovered'].fillna(0, inplace=True)
 
-    df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
-
     # Add state column
     df['State'] = state
-
-    # Reorder columns
-    df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
     return df
 
@@ -116,11 +112,30 @@ def scrapeApiJson(stateConfig, state):
                 'Deaths': numDeaths or 0,
                 'Recovered': numRecovered or 0} , ignore_index=True)
 
-    df = df.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
-    df = df[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
-
     return df
 
+def scrapeText(stateConfig, state):
+    tree = htmlparse.fromstring(getSiteContent(stateConfig['url']))
+    subtree = tree.xpath('//*[@id="odx-main-content"]/article/section[2]/div/div[3]/div/div/div/div[1]/div/p')
+    startDelim = 'Number of counties with cases: '
+    endDelim = '</p>'
+    dataString = str(htmlparse.tostring(subtree[0]))
+
+    dataString = dataString[dataString.find(startDelim) + len(startDelim):dataString.find(endDelim)]
+    dataList = dataString.split(',')
+
+    df = pd.DataFrame()
+    for countyDatum in dataList:
+        countyDatum = countyDatum.strip().replace('(', '').replace(')', '')
+        dataPair = countyDatum.split()
+        df = df.append({
+            'County': dataPair[0],
+            'State': state,
+            'Cases': dataPair[1] or 0,
+            'Deaths': 0, # update to non-zero
+            'Recovered': 0}, ignore_index=True) # update to non-zero
+
+    return df
 
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
@@ -138,11 +153,16 @@ with open('stateConfig.yml') as configFile:
         stateConfig = configs['states'][state]
 
         if 'type' not in stateConfig or stateConfig['type'] == 'table':
-            statedf = scrapeHtmlTable(stateConfig)
+            statedf = scrapeHtmlTable(stateConfig, state)
         elif stateConfig['type'] == 'api-json':
             statedf = scrapeApiJson(stateConfig, state)
+        elif stateConfig['type'] == 'text':
+            statedf = scrapeText(stateConfig, state)
         else:
             statedf = pd.DataFrame()
+
+        statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
+        statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
         print(statedf)
         print(statedf.dtypes)

@@ -120,6 +120,9 @@ states:
     countyDpath: 'attributes/County'
     casesDpath: 'attributes/Total'
     deathsDpath: 'attributes/Deaths'
+  Ohio:
+    type: 'text'
+    url: 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
