@@ -8,6 +8,7 @@ import json
 import dpath.util
 import sys
 from lxml import html as htmlparse
+from io import StringIO
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -137,6 +138,18 @@ def scrapeText(stateConfig, state):
 
     return df
 
+def scrapeCsv(stateConfig, state):
+    footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
+    df = pd.read_csv(StringIO(getSiteContent(stateConfig['url'])), skipfooter=footerRowsToSkip)
+    countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
+    casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
+    columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
+    df.rename(columns=columnRename, inplace=True)
+    df['Deaths'] = 0
+    df['Recovered'] = 0
+    df['State'] = state
+    return df
+
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
@@ -158,6 +171,8 @@ with open('stateConfig.yml') as configFile:
             statedf = scrapeApiJson(stateConfig, state)
         elif stateConfig['type'] == 'text':
             statedf = scrapeText(stateConfig, state)
+        elif stateConfig['type'] == 'csv':
+            statedf = scrapeCsv(stateConfig, state)
         else:
             statedf = pd.DataFrame()
 
