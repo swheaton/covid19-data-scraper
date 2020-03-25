@@ -9,6 +9,7 @@ import dpath.util
 import sys
 from lxml import html as htmlparse
 from io import StringIO
+import re
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -127,18 +128,21 @@ def scrapeText(stateConfig, state):
     elif 'firstCounty' in stateConfig:
         startIndex = dataString.find(stateConfig['firstCounty'])
     else:
-        print("ERROR: did you mean to not have a start delim?")
+        print("ERROR: did you mean to not have a start delim or first county?")
     endDelim = stateConfig['endDelim']
 
     dataString = dataString[startIndex : dataString.find(endDelim)]
     dataList = dataString.split(getOrDefault(stateConfig, 'eltDelim', ','))
 
-    print(dataList)
-
     df = pd.DataFrame()
     for countyDatum in dataList:
-        countyDatum = countyDatum.strip().replace('(', '').replace(')', '')
+        countyDatum = countyDatum.strip().replace('(', '').replace(')', '').replace(':', '')
+        countyDatum = re.sub(r'<[^>]+>', '', countyDatum)
+
         dataTuple = countyDatum.split()
+        if not dataTuple[-1].isdigit():
+            dataTuple.append(0)
+
         df = df.append({
             'County': ' '.join(dataTuple[0:len(dataTuple)-1]),
             'State': state,
