@@ -123,8 +123,8 @@ states:
   Ohio:
     type: 'text'
     url: 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
-    dataXpath: '//*[@id="odx-main-content"]/article/section[2]/div/div[3]/div/div/div/div[1]/div/p'
-    startDelim: 'Number of counties with cases: '
+    dataXpath: '//*[@id="odx-main-content"]/article/section[2]/div/div[4]/div/div/div/div[1]/div/p'
+    firstCounty: 'Ashland'
     endDelim: '</p>'
   Oklahoma:
     type: 'table'
@@ -186,6 +186,13 @@ states:
     countyDpath: 'attributes/NAME'
     casesDpath: 'attributes/POSITIVE'
     deathsDpath: 'attributes/DEATHS'
+  Wyoming:
+    type: 'text'
+    url: 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
+    dataXpath: '//*[@id="et-boc"]/div/div/div/div[3]/div[2]/div/div/p'
+    startDelim: 'Cases by County</strong><br>'
+    endDelim: '</p>'
+    eltDelim: '<br>'
 
 labnotcounty:
   - Nevada 'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9'
@@ -195,7 +202,6 @@ nocountyinfo:
   - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
 
 jsrender:
-  - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Utah 'https://coronavirus.utah.gov/case-counts/'
   - Washington 'https://www.doh.wa.gov/Emergencies/Coronavirus'
 
@@ -208,6 +214,7 @@ pdf:
 
 tableau:
   - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
+  - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Illinois 'http://www.dph.illinois.gov/topics-services/diseases-and-conditions/diseases-a-z-list/coronavirus'
   - Virginia 'http://www.vdh.virginia.gov/coronavirus/'
 
@@ -218,7 +225,6 @@ image:
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  - Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
 
 uncategorized:
   Puerto Rico 'https://estadisticas.pr/en/covid-19'

@@ -118,21 +118,31 @@ def scrapeApiJson(stateConfig, state):
 def scrapeText(stateConfig, state):
     tree = htmlparse.fromstring(getSiteContent(stateConfig['url']))
     subtree = tree.xpath(stateConfig['dataXpath'])
-    startDelim = stateConfig['startDelim']
-    endDelim = stateConfig['endDelim']
     dataString = str(htmlparse.tostring(subtree[0]))
 
-    dataString = dataString[dataString.find(stateConfig['startDelim']) + len(startDelim):dataString.find(endDelim)]
-    dataList = dataString.split(',')
+    startIndex = 0
+    if 'startDelim' in stateConfig:
+        startDelim = stateConfig['startDelim']
+        startIndex = dataString.find(startDelim) + len(startDelim)
+    elif 'firstCounty' in stateConfig:
+        startIndex = dataString.find(stateConfig['firstCounty'])
+    else:
+        print("ERROR: did you mean to not have a start delim?")
+    endDelim = stateConfig['endDelim']
+
+    dataString = dataString[startIndex : dataString.find(endDelim)]
+    dataList = dataString.split(getOrDefault(stateConfig, 'eltDelim', ','))
+
+    print(dataList)
 
     df = pd.DataFrame()
     for countyDatum in dataList:
         countyDatum = countyDatum.strip().replace('(', '').replace(')', '')
-        dataPair = countyDatum.split()
+        dataTuple = countyDatum.split()
         df = df.append({
-            'County': dataPair[0],
+            'County': ' '.join(dataTuple[0:len(dataTuple)-1]),
             'State': state,
-            'Cases': dataPair[1] or 0,
+            'Cases': dataTuple[-1] or 0,
             'Deaths': 0, # update to non-zero
             'Recovered': 0}, ignore_index=True) # update to non-zero
 
