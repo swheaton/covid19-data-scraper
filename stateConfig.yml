@@ -123,6 +123,9 @@ states:
   Ohio:
     type: 'text'
     url: 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
+    dataXpath: '//*[@id="odx-main-content"]/article/section[2]/div/div[3]/div/div/div/div[1]/div/p'
+    startDelim: 'Number of counties with cases: '
+    endDelim: '</p>'
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
@@ -165,6 +168,12 @@ states:
     casesCol: 'Cases3'
     countyCol: 'County of Residence2'
     tableIndex: 2
+  West Virginia:
+    type: 'text'
+    url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
+    dataXpath: '//*[@id="WebPartWPQ6"]/p'
+    startDelim: 'Counties with positive cases: '
+    endDelim: '</p>'
   Wisconsin:
     type: 'api-json'
     url: 'https://services1.arcgis.com/ISZ89Z51ft1G16OK/arcgis/rest/services/COVID19_WI/FeatureServer/0/query?f=json&where=1%3D1&outFields=*&returnQueryGeometry=false'
@@ -207,8 +216,6 @@ image:
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
-  - Ohio 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
-  - West Virginia 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
   - Wyoming 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
 
 uncategorized:

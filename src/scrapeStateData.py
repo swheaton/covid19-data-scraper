@@ -116,12 +116,12 @@ def scrapeApiJson(stateConfig, state):
 
 def scrapeText(stateConfig, state):
     tree = htmlparse.fromstring(getSiteContent(stateConfig['url']))
-    subtree = tree.xpath('//*[@id="odx-main-content"]/article/section[2]/div/div[3]/div/div/div/div[1]/div/p')
-    startDelim = 'Number of counties with cases: '
-    endDelim = '</p>'
+    subtree = tree.xpath(stateConfig['dataXpath'])
+    startDelim = stateConfig['startDelim']
+    endDelim = stateConfig['endDelim']
     dataString = str(htmlparse.tostring(subtree[0]))
 
-    dataString = dataString[dataString.find(startDelim) + len(startDelim):dataString.find(endDelim)]
+    dataString = dataString[dataString.find(stateConfig['startDelim']) + len(startDelim):dataString.find(endDelim)]
     dataList = dataString.split(',')
 
     df = pd.DataFrame()
