@@ -7,9 +7,9 @@ For any implemented method below, each state is completely configurable in [yaml
 ## Methods
 - Scrape HTML ```<table>``` using [requests](https://requests.readthedocs.io/en/master/) module and [pandas](https://pandas.pydata.org/)
 - Scrape [JSON](https://docs.python.org/3/library/json.html) return from a web API call. Process in a configurable manner using [dpath](https://pypi.org/project/dpath/)
+- HTML text scrape using [lxml](https://lxml.de/) and [re](https://docs.python.org/3/library/re.html)
 
 ## Proposed Methods for Remaining States
-- HTML text scrape
 - JS render required first
 - PDF scrape
 - Tableau app
