@@ -40,7 +40,7 @@ def doJsRender(url, tosleep):
     content = None
     with HTMLSession() as session:
         r = session.get(url)
-        r.html.render(timeout=0, sleep=tosleep)
+        r.html.render(retries=5, timeout=0, sleep=tosleep)
         content = r.html.html
     return content
 

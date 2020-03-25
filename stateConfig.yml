@@ -36,8 +36,9 @@ states:
     type: 'table'
     url: 'https://health.hawaii.gov/docd/advisories/novel-coronavirus-2019/'
     headerRowsToSkip: 2
-    footerRowsToSkip: 4
+    footerRowsToSkip: 5
     casesCol: 'Unnamed: 1'
+    countyCol: 'By Residence'
   Idaho:
     type: 'table'
     url: 'https://coronavirus.idaho.gov/'
@@ -72,7 +73,7 @@ states:
     casesCol: 'Confirmed'
   Maryland:
     type: 'api-json'
-    url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/COVID19_MD_CountyCaseCounts_DEMO/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
+    url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_Case_Counts_by_County/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/COUNTY'
     casesDpath: 'attributes/COVID19Cases'
@@ -104,7 +105,7 @@ states:
     url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/COUNTY_LAB'
-    casesDpath: 'attributes/COUNTS'
+    casesDpath: 'attributes/TOTAL_CASES'
   New Mexico:
     type: 'table'
     url: 'https://cv.nmhealth.org/cases-by-county/'
@@ -149,7 +150,7 @@ states:
     footerRowsToSkip: 1
   South Carolina:
     type: 'api-json'
-    url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/COVID19_County_View/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
+    url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/Covid19_Cases_Centroid_SharingView/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/NAME'
     casesDpath: 'attributes/Confirmed'
@@ -165,14 +166,23 @@ states:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     casesCol: 'Count'
-    tableIndex: 3
+    tableIndex: 4
     footerRowsToSkip: 1
   Texas:
-    type: 'table'
-    url: 'https://www.dshs.state.tx.us/news/updates.shtm#coronavirus'
-    casesCol: 'Cases3'
-    countyCol: 'County of Residence2'
-    tableIndex: 2
+    type: 'api-json'
+    url: 'https://services5.arcgis.com/ACaLB9ifngzawspq/arcgis/rest/services/COVID19County_ViewLayer/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/County'
+    casesDpath: 'attributes/Count_'
+    deathsDpath: 'attributes/Deaths'
+  Utah:
+    type: 'table' # can get script app data?? instead of js render
+    url: 'https://coronavirus-dashboard.utah.gov/'
+    doJsRender: true
+    sleepAfterRender: 10
+    retries: 5
+    countyCol: 'Jurisdiction'
+    footerRowsToSkip: 1
   Washington:
     type: 'table'
     url: 'https://www.doh.wa.gov/Emergencies/Coronavirus'
@@ -208,9 +218,6 @@ labnotcounty:
 nocountyinfo:
   - California
   - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
-
-jsrender:
-  - Utah 'https://coronavirus.utah.gov/case-counts/'
 
 pdf:
   New Hampshire 'https://www.nh.gov/covid19/'
