@@ -173,6 +173,14 @@ states:
     casesCol: 'Cases3'
     countyCol: 'County of Residence2'
     tableIndex: 2
+  Washington:
+    type: 'table'
+    url: 'https://www.doh.wa.gov/Emergencies/Coronavirus'
+    doJsRender: true
+    sleepAfterRender: 10
+    tableIndex: 4
+    casesCol: 'Positive/Confirmed Cases'
+    footerRowsToSkip: 1
   West Virginia:
     type: 'text'
     url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
@@ -203,7 +211,6 @@ nocountyinfo:
 
 jsrender:
   - Utah 'https://coronavirus.utah.gov/case-counts/'
-  - Washington 'https://www.doh.wa.gov/Emergencies/Coronavirus'
 
 pdf:
   New Hampshire 'https://www.nh.gov/covid19/'

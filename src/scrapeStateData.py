@@ -3,6 +3,7 @@ import yaml
 import numpy as np
 import ssl
 import requests
+from requests_html import HTMLSession
 import urllib
 import json
 import dpath.util
@@ -16,11 +17,6 @@ def getOrDefault(config: object, attr: object, default: object) -> object:
     if attr in config:
         retValue = config[attr]
     return retValue
-
-def mangleUrl(config: object, url: object) -> object:
-    if config['type'] == 'api-json':
-        url = url.replace(config['countyDelim'],)
-    return ''
 
 def getSiteContent(url):
     # Doing this to look more like a browser so we won't get denied.
@@ -40,8 +36,16 @@ def getSiteContent(url):
         content = r.read()
     return content
 
-def scrapeHtmlTable(stateConfig, state):
-    html = getSiteContent(stateConfig['url'])
+def doJsRender(url, tosleep):
+    content = None
+    with HTMLSession() as session:
+        r = session.get(url)
+        r.html.render(timeout=0, sleep=tosleep)
+        content = r.html.html
+    return content
+
+def scrapeHtmlTable(stateConfig, state, pagecontent):
+    html = pagecontent
 
     tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
     headerRowsToSkip = getOrDefault(stateConfig, 'headerRowsToSkip', 0)
@@ -60,6 +64,8 @@ def scrapeHtmlTable(stateConfig, state):
     casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
     df.rename(columns=columnRename, inplace=True)
+
+    print(df)
 
     # Extract number if cases col is string.
     #   And also zero-width space first...
@@ -97,10 +103,10 @@ def scrapeHtmlTable(stateConfig, state):
 
     return df
 
-def scrapeApiJson(stateConfig, state):
+def scrapeApiJson(stateConfig, state, pagecontent):
     df = pd.DataFrame()
 
-    jsonResult = json.loads(getSiteContent(stateConfig['url']))
+    jsonResult = json.loads(pagecontent)
 
     for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
         county = dpath.util.get(countyJson, stateConfig['countyDpath'])
@@ -116,8 +122,8 @@ def scrapeApiJson(stateConfig, state):
 
     return df
 
-def scrapeText(stateConfig, state):
-    tree = htmlparse.fromstring(getSiteContent(stateConfig['url']))
+def scrapeText(stateConfig, state, pagecontent):
+    tree = htmlparse.fromstring(pagecontent)
     subtree = tree.xpath(stateConfig['dataXpath'])
     dataString = str(htmlparse.tostring(subtree[0]))
 
@@ -152,9 +158,9 @@ def scrapeText(stateConfig, state):
 
     return df
 
-def scrapeCsv(stateConfig, state):
+def scrapeCsv(stateConfig, state, pagecontent):
     footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
-    df = pd.read_csv(StringIO(getSiteContent(stateConfig['url'])), skipfooter=footerRowsToSkip)
+    df = pd.read_csv(StringIO(pagecontent), skipfooter=footerRowsToSkip)
     countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
     casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
@@ -179,14 +185,20 @@ with open('stateConfig.yml') as configFile:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
 
+        if 'doJsRender' in stateConfig and stateConfig['doJsRender']:
+            sleepAfterRender = getOrDefault(stateConfig, 'sleepAfterRender', 5)
+            pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
+        else:
+            pagecontent = getSiteContent(stateConfig['url'])
+
         if 'type' not in stateConfig or stateConfig['type'] == 'table':
-            statedf = scrapeHtmlTable(stateConfig, state)
+            statedf = scrapeHtmlTable(stateConfig, state, pagecontent)
         elif stateConfig['type'] == 'api-json':
-            statedf = scrapeApiJson(stateConfig, state)
+            statedf = scrapeApiJson(stateConfig, state, pagecontent)
         elif stateConfig['type'] == 'text':
-            statedf = scrapeText(stateConfig, state)
+            statedf = scrapeText(stateConfig, state, pagecontent)
         elif stateConfig['type'] == 'csv':
-            statedf = scrapeCsv(stateConfig, state)
+            statedf = scrapeCsv(stateConfig, state, pagecontent)
         else:
             statedf = pd.DataFrame()
 
@@ -198,4 +210,4 @@ with open('stateConfig.yml') as configFile:
         aggrDf = aggrDf.append(statedf)
     print(aggrDf)
     aggrDf.to_csv('data/out.csv', index=False)
-    print("Saved to out.csv")
+    print("Saved to data/out.csv")
