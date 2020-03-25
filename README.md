@@ -10,7 +10,6 @@ For any implemented method below, each state is completely configurable in [yaml
 - HTML text scrape using [lxml](https://lxml.de/) and [re](https://docs.python.org/3/library/re.html)
 
 ## Proposed Methods for Remaining States
-- HTML text scrape
 - JS render required first
 - PDF scrape
 - Tableau app
