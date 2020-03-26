@@ -28,6 +28,13 @@ states:
     casesDpath: 'attributes/Presumptive_Positive'
     deathsDpath: 'attributes/Total_Death'
     recoveredDpath: 'attributes/Recovered'
+  Florida:
+    type: 'api-json'
+    url: 'https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_Testing/FeatureServer/0/query?f=json&where=County_1%3C%3E%27%27&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/County_1'
+    casesDpath: 'attributes/CasesAll'
+    deathsDpath: 'attributes/FLandNonFLDeaths'
   Georgia:
     type: 'table'
     url: 'https://dph.georgia.gov/covid-19-daily-status-report'
@@ -225,22 +232,21 @@ labnotcounty:
 nocountyinfo:
   - California
   - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
+  - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 pdf:
   New Hampshire 'https://www.nh.gov/covid19/'
   Connecticut
-  Florida 'https://floridadisaster.org/globalassets/covid19/dailies/covid-19-data---daily-report-2020-03-22-0951.pdf'
   Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf'
   Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download'
 
 tableau:
   - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
-  - Virginia 'http://www.vdh.virginia.gov/coronavirus/'
+  - Virginia 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
 
 image:
   - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
-  - Kentucky 'https://govstatus.egov.com/kycovid19'
   - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus'
 
 text:
