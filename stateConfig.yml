@@ -140,7 +140,7 @@ states:
     url: 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
     dataXpath: '//*[@id="odx-main-content"]/article/section[2]/div/div[4]/div/div/div/div[1]/div/p'
     firstCounty: 'Ashland'
-    endDelim: '</p>'
+    sentinel: '</p>'
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
@@ -210,7 +210,7 @@ states:
     url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
     dataXpath: '//*[@id="WebPartWPQ6"]/p'
     startDelim: 'Counties with positive cases: '
-    endDelim: '</p>'
+    sentinel: '</p>'
   Wisconsin:
     type: 'api-json'
     url: 'https://services1.arcgis.com/ISZ89Z51ft1G16OK/arcgis/rest/services/COVID19_WI/FeatureServer/0/query?f=json&where=1%3D1&outFields=*&returnQueryGeometry=false'
@@ -223,7 +223,7 @@ states:
     url: 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
     dataXpath: '//*[@id="et-boc"]/div/div/div/div[3]/div[2]/div/div/p'
     startDelim: 'Cases by County</strong><br>'
-    endDelim: '</p>'
+    sentinel: '</p>'
     eltDelim: '<br>'
 
 labnotcounty:

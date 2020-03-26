@@ -135,9 +135,9 @@ def scrapeText(stateConfig, state, pagecontent):
         startIndex = dataString.find(stateConfig['firstCounty'])
     else:
         print("ERROR: did you mean to not have a start delim or first county?")
-    endDelim = stateConfig['endDelim']
+    sentinel = stateConfig['sentinel']
 
-    dataString = dataString[startIndex : dataString.find(endDelim)]
+    dataString = dataString[startIndex : dataString.find(sentinel)]
     dataList = dataString.split(getOrDefault(stateConfig, 'eltDelim', ','))
 
     df = pd.DataFrame()
