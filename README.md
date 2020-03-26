@@ -87,6 +87,7 @@ For any implemented method below, each state is completely configurable in [yaml
 - urllib
 - json
 - dpath.util
+- lxml
 
 ## TODO
 - Expand coverage internationally
