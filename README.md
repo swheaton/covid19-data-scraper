@@ -17,65 +17,65 @@ For any implemented method below, each state is completely configurable in [yaml
 
 ## Progress
 - 37 / 50 US states
-  - [x] Alabama
-  - [x] Alaska
-  - [ ] American Samoa
-  - [ ] Arizona
-  - [x] Arkansas
-  - [ ] California
-  - [ ] Colorado
-  - [ ] Connecticut
-  - [x] Delaware
-  - [ ] District of Columbia
-  - [x] Florida
-  - [x] Georgia
-  - [ ] Guam
-  - [x] Hawaii
-  - [x] Idaho
-  - [x] Illinois
-  - [x] Indiana
-  - [x] Iowa
-  - [ ] Kansas
-  - [ ] Kentucky
-  - [x] Lousiana
-  - [x] Maine
-  - [ ] Marshall Islands
-  - [x] Maryland
-  - [ ] Massachusetts
-  - [x] Michigan
-  - [ ] Micronesia
-  - [x] Minnesota
-  - [x] Mississippi
-  - [x] Missouri
-  - [x] Montana
-  - [ ] Nebraska
-  - [ ] Nevada
-  - [ ] New Hampshire
-  - [x] New Jersey
-  - [x] New Mexico
-  - [x] New York
-  - [x] North Carolina
-  - [ ] North Dakota
-  - [ ] Northern Mariana Islands
-  - [x] Ohio
-  - [x] Oklahoma
-  - [x] Oregon
-  - [x] Pennsylvania
-  - [ ] Puerto Rico
-  - [ ] Republic of Palau
-  - [x] Rhode Island
-  - [x] South Carolina
-  - [x] South Dakota
-  - [x] Tennessee
-  - [x] Texas
-  - [ ] US Virgin Islands
-  - [x] Utah
-  - [ ] Vermont
-  - [ ] Virginia
-  - [x] Washington
-  - [x] West Virginia
-  - [x] Wisconsin
-  - [x] Wyoming
+  - :white_check_mark: Alabama
+  - :white_check_mark: Alaska
+  - :x: American Samoa
+  - :x: Arizona
+  - :white_check_mark: Arkansas
+  - :x: California
+  - :x: Colorado
+  - :x: Connecticut
+  - :white_check_mark: Delaware
+  - :x: District of Columbia
+  - :white_check_mark: Florida
+  - :white_check_mark: Georgia
+  - :x: Guam
+  - :white_check_mark: Hawaii
+  - :white_check_mark: Idaho
+  - :white_check_mark: Illinois
+  - :white_check_mark: Indiana
+  - :white_check_mark: Iowa
+  - :x: Kansas
+  - :x: Kentucky
+  - :white_check_mark: Lousiana
+  - :white_check_mark: Maine
+  - :x: Marshall Islands
+  - :white_check_mark: Maryland
+  - :x: Massachusetts
+  - :white_check_mark: Michigan
+  - :x: Micronesia
+  - :white_check_mark: Minnesota
+  - :white_check_mark: Mississippi
+  - :white_check_mark: Missouri
+  - :white_check_mark: Montana
+  - :x: Nebraska
+  - :x: Nevada
+  - :x: New Hampshire
+  - :white_check_mark: New Jersey
+  - :white_check_mark: New Mexico
+  - :white_check_mark: New York
+  - :white_check_mark: North Carolina
+  - :x: North Dakota
+  - :x: Northern Mariana Islands
+  - :white_check_mark: Ohio
+  - :white_check_mark: Oklahoma
+  - :white_check_mark: Oregon
+  - :white_check_mark: Pennsylvania
+  - :x: Puerto Rico
+  - :x: Republic of Palau
+  - :white_check_mark: Rhode Island
+  - :white_check_mark: South Carolina
+  - :white_check_mark: South Dakota
+  - :white_check_mark: Tennessee
+  - :white_check_mark: Texas
+  - :x: US Virgin Islands
+  - :white_check_mark: Utah
+  - :x: Vermont
+  - :x: Virginia
+  - :white_check_mark: Washington
+  - :white_check_mark: West Virginia
+  - :white_check_mark: Wisconsin
+  - :white_check_mark: Wyoming
 - 0 / 9 districts, territories, and freely associated states
 
 ## Python Modules Used

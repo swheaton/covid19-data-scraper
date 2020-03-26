@@ -235,10 +235,10 @@ nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 pdf:
-  New Hampshire 'https://www.nh.gov/covid19/'
-  Connecticut
-  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf'
-  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download'
+  New Hampshire 'https://www.nh.gov/covid19/' # hard
+  Connecticut 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en' # easy
+  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
+  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
 
 tableau:
   - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
@@ -246,8 +246,8 @@ tableau:
   - Virginia 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
 
 image:
-  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
-  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus'
+  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases' # easy
+  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
