@@ -71,8 +71,10 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     #   And also zero-width space first...
     if df['Cases'].dtype == np.object:
         df['Cases'] = df['Cases'].str.replace('\u200b', '')
+        df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', 1))
         df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
 
+    print(df)
     # Remove all extraneous columns
     df.drop(df.columns.difference(['County', 'Cases', 'Deaths', 'Recovered']), axis=1, inplace=True)
 
@@ -85,6 +87,7 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
             df['Deaths'] = df['Deaths'].str.replace('\u200b', '')
             df['Deaths'].replace('', 0, inplace=True)
             df['Deaths'].replace('-', 0, inplace=True)
+            df['Deaths'].replace(b'\xe2\x80\x94'.decode('utf-8'), 0, inplace=True)
         df['Deaths'].fillna(0, inplace=True)
 
     # Add recovered column if not present
@@ -146,13 +149,17 @@ def scrapeText(stateConfig, state, pagecontent):
         countyDatum = re.sub(r'<[^>]+>', '', countyDatum)
 
         dataTuple = countyDatum.split()
+        newInParen = getOrDefault(stateConfig, 'newInParen', False)
+        caseIndex = 1
+        if newInParen:
+            caseIndex = 2
         if not dataTuple[-1].isdigit():
             dataTuple.append(0)
 
         df = df.append({
-            'County': ' '.join(dataTuple[0:len(dataTuple)-1]),
+            'County': ' '.join(dataTuple[0:len(dataTuple)-caseIndex]),
             'State': state,
-            'Cases': dataTuple[-1] or 0,
+            'Cases': dataTuple[-caseIndex] or 0,
             'Deaths': 0, # update to non-zero
             'Recovered': 0}, ignore_index=True) # update to non-zero
 

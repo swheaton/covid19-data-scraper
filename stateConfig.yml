@@ -1,15 +1,16 @@
 ---
 states:
   Alabama:
-    type: 'table'
-    url: 'http://alabamapublichealth.gov/infectiousdiseases/2019-coronavirus.html'
-    headerRowsToSkip: 1
-    countyCol: 'County of Residence'
-    footerRowsToSkip: 1
+    type: 'api-json'
+    url: 'https://services7.arcgis.com/4RQmZZ0yaZkGR1zy/arcgis/rest/services/COV19_Public_Dashboard_ReadOnly/FeatureServer/0/query?f=json&where=CNTYNAME%3C%3E%27%27&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/CNTYNAME'
+    casesDpath: 'attributes/CONFIRMED'
+    deathsDpath: 'attributes/DIED'
   Alaska:
     type: 'table'
     url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
-    countyCol: 'Region'
+    countyCol: 'Unnamed: 0'
     footerRowsToSkip: 1
     casesCol: 'Total'
   Arkansas:
@@ -22,7 +23,7 @@ states:
     recoveredDpath: 'attributes/Recoveries'
   Delaware:
     type: 'api-json'
-    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
+    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_Time_VIEW/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/NAME'
     casesDpath: 'attributes/Presumptive_Positive'
@@ -39,13 +40,15 @@ states:
     type: 'table'
     url: 'https://dph.georgia.gov/covid-19-daily-status-report'
     tableIndex: 2
+    footerRowsToSkip: 1
   Hawaii:
-    type: 'table'
-    url: 'https://health.hawaii.gov/docd/advisories/novel-coronavirus-2019/'
-    headerRowsToSkip: 2
-    footerRowsToSkip: 5
-    casesCol: 'Unnamed: 1'
-    countyCol: 'By Residence'
+    type: 'text'
+    url: 'https://health.hawaii.gov/coronavirusdisease2019/'
+    dataXpath: '//*[@id="main"]/div[2]/div[1]/div/div[1]/div[1]/dl'
+    startDelim: '</dd>\n<dd>'
+    eltDelim: '</dd>\n<dd>'
+    sentinel: '\n<dd>Pending'
+    newInParen: true
   Idaho:
     type: 'table'
     url: 'https://coronavirus.idaho.gov/'
@@ -135,12 +138,6 @@ states:
     countyDpath: 'attributes/County'
     casesDpath: 'attributes/Total'
     deathsDpath: 'attributes/Deaths'
-  Ohio:
-    type: 'text'
-    url: 'https://coronavirus.ohio.gov/wps/portal/gov/covid-19/'
-    dataXpath: '//*[@id="odx-main-content"]/article/section[2]/div/div[4]/div/div/div/div[1]/div/p'
-    firstCounty: 'Ashland'
-    sentinel: '</p>'
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
@@ -150,7 +147,8 @@ states:
   Oregon:
     type: 'table'
     url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
-    casesCol: 'Number of cases'
+    casesCol: 'Positive'
+    deathsCol: 'Deaths*'
     footerRowsToSkip: 1
     tableIndex: 1
   Pennsylvania:
@@ -158,10 +156,14 @@ states:
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
     tableIndex: 1
   Rhode Island:
-    type: 'csv'
-    url: 'https://docs.google.com/spreadsheets/d/1n-zMS9Al94CPj_Tc3K7Adin-tN9x1RSjjx2UzJ4SV7Q/gviz/tq?tqx=out:csv&sheet=County%20Data'
-    casesCol: 'Number of  COVID-19 positive (including presumptive positive) cases'
-    footerRowsToSkip: 1
+    type: 'table'
+    url: 'https://health.ri.gov/data/covid-19/'
+    casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
+    countyCol: 'City/Town'
+    doJsRender: true
+    tableIndex: 4
+    sleepAfterRender: 10
+    replaceLess5: '1'
   South Carolina:
     type: 'api-json'
     url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/Covid19_Cases_Centroid_SharingView/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -235,19 +237,20 @@ nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 pdf:
-  New Hampshire 'https://www.nh.gov/covid19/' # hard
-  Connecticut 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en' # easy
-  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
-  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
+  New Hampshire 'https://www.nh.gov/covid19/'
+  Connecticut 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en'
+  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf'
+  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download'
 
 tableau:
   - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Virginia 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
+  - Ohio 'https://public.tableau.com/views/OverviewDashboard_15852499073250/DashboardOverview_1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&iframeSizedToWindow=true&:loadOrderID=0'
 
 image:
-  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases' # easy
-  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
+  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus'
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
