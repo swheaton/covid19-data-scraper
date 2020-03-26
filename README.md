@@ -17,6 +17,65 @@ For any implemented method below, each state is completely configurable in [yaml
 
 ## Progress
 - 37 / 50 US states
+  - [x] Alabama
+  - [x] Alaska
+  - [ ] American Samoa
+  - [ ] Arizona
+  - [x] Arkansas
+  - [ ] California
+  - [ ] Colorado
+  - [ ] Connecticut
+  - [x] Delaware
+  - [ ] District of Columbia
+  - [x] Florida
+  - [x] Georgia
+  - [ ] Guam
+  - [x] Hawaii
+  - [x] Idaho
+  - [x] Illinois
+  - [x] Indiana
+  - [x] Iowa
+  - [ ] Kansas
+  - [ ] Kentucky
+  - [x] Lousiana
+  - [x] Maine
+  - [ ] Marshall Islands
+  - [x] Maryland
+  - [ ] Massachusetts
+  - [x] Michigan
+  - [ ] Micronesia
+  - [x] Minnesota
+  - [x] Mississippi
+  - [x] Missouri
+  - [x] Montana
+  - [ ] Nebraska
+  - [ ] Nevada
+  - [ ] New Hampshire
+  - [x] New Jersey
+  - [x] New Mexico
+  - [x] New York
+  - [x] North Carolina
+  - [ ] North Dakota
+  - [ ] Northern Mariana Islands
+  - [x] Ohio
+  - [x] Oklahoma
+  - [x] Oregon
+  - [x] Pennsylvania
+  - [ ] Puerto Rico
+  - [ ] Republic of Palau
+  - [x] Rhode Island
+  - [x] South Carolina
+  - [x] South Dakota
+  - [x] Tennessee
+  - [x] Texas
+  - [ ] US Virgin Islands
+  - [x] Utah
+  - [ ] Vermont
+  - [ ] Virginia
+  - [x] Washington
+  - [x] West Virginia
+  - [x] Wisconsin
+  - [x] Wyoming
 - 0 / 9 districts, territories, and freely associated states
 
 ## Python Modules Used
