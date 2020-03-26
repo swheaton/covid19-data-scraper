@@ -130,3 +130,6 @@ dmypy.json
 
 # Py Charm
 .idea/
+
+_tmp/
+data/out.csv

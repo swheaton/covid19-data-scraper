@@ -20,6 +20,16 @@ states:
     casesDpath: 'attributes/positive'
     deathsDpath: 'attributes/deaths'
     recoveredDpath: 'attributes/Recoveries'
+  Connecticut:
+    type: 'pdf'
+    url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
+    dateInUrl: true
+    dateFormat: '%m%d%Y'
+    zeroPad: false
+    pageOfTable: 6
+    countyCol: 'Town'
+    numCols: 3
+    sentinel: '*Data are preliminary and subject to change*'
   Delaware:
     type: 'api-json'
     url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_View/FeatureServer/0/query?f=json&where=NAME<>%27%27&returnGeometry=false&outFields=*'
@@ -235,19 +245,19 @@ nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 pdf:
-  New Hampshire 'https://www.nh.gov/covid19/' # hard
-  Connecticut 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en' # easy
-  Kansas 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
-  Massassachusetts 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
+  New Hampshire: 'https://www.nh.gov/covid19/' # hard
+  Connecticut: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en' # easy
+  Kansas: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
+  Massassachusetts: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
 
 tableau:
-  - Arizona 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
-  - Colorado 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
-  - Virginia 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
+  - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
+  - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
+  - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
 
 image:
-  - North Dakota 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases' # easy
-  - Vermont 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
+  - North Dakota: 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases' # easy
+  - Vermont: 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
 
 text:
   - DC 'https://coronavirus.dc.gov/page/coronavirus-data'

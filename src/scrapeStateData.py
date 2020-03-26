@@ -11,6 +11,8 @@ import sys
 from lxml import html as htmlparse
 from io import StringIO
 import re
+from datetime import datetime, timedelta
+import os
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -28,13 +30,27 @@ def getSiteContent(url):
     content = None
     try:
         r = requests.get(url, headers=header)
-        content = r.text
+        content = r.content
     except requests.exceptions.SSLError:
         print('SSLError, trying to fake SSL context')
         context = ssl._create_unverified_context()
         r = urllib.request.urlopen(url, context=context)
         content = r.read()
     return content
+
+def mangleDateInUrl(stateConfig):
+    yesterday = datetime.today() - timedelta(days=1)
+    if getOrDefault(stateConfig, 'zeroPad', True):
+        outDate = yesterday.strftime(stateConfig['dateFormat'])
+    else:
+        tokens = stateConfig['dateFormat'].split('%')
+        outDate = tokens[0]
+        tokens = tokens[1:]
+        for token in tokens:
+            outDate = outDate + yesterday.strftime('%'+token).lstrip('0')
+    mangledUrl = stateConfig['url'].replace('{{INSERT_DATE}}', outDate)
+    print(mangledUrl)
+    return mangledUrl
 
 def doJsRender(url, tosleep):
     content = None
@@ -170,6 +186,21 @@ def scrapeCsv(stateConfig, state, pagecontent):
     df['State'] = state
     return df
 
+def scrapePdf(stateConfig, state, pagecontent):
+    with open('_tmp/tmp.pdf', 'wb') as pdfFile:
+        pdfFile.write(pagecontent)
+    os.remove('_tmp/tmp.txt')
+
+    pageOfTable = ''
+    if 'pageOfTable' in stateConfig:
+        pageOfTable = '-f ' + str(stateConfig['pageOfTable']) + ' -l ' + str(stateConfig['pageOfTable'])
+    os.system('pdftotext ' + pageOfTable +' -layout _tmp/tmp.pdf')
+    with open('_tmp/tmp.txt', 'r') as txtFile:
+        print(txtFile.read())
+    #print(pagecontent)
+    #system('pdftotext ')
+    return pd.DataFrame()
+
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
@@ -185,6 +216,9 @@ with open('stateConfig.yml') as configFile:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
 
+        if getOrDefault(stateConfig, 'dateInUrl', False):
+            stateConfig['url'] = mangleDateInUrl(stateConfig)
+
         if 'doJsRender' in stateConfig and stateConfig['doJsRender']:
             sleepAfterRender = getOrDefault(stateConfig, 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
@@ -199,6 +233,8 @@ with open('stateConfig.yml') as configFile:
             statedf = scrapeText(stateConfig, state, pagecontent)
         elif stateConfig['type'] == 'csv':
             statedf = scrapeCsv(stateConfig, state, pagecontent)
+        elif stateConfig['type'] == 'pdf':
+            statedf = scrapePdf(stateConfig, state, pagecontent)
         else:
             statedf = pd.DataFrame()
 
