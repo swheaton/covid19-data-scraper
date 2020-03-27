@@ -7,16 +7,17 @@ For any implemented method below, each state is completely configurable in [yaml
 ## Methods
 - Scrape HTML ```<table>``` using [requests](https://requests.readthedocs.io/en/master/) module and [pandas](https://pandas.pydata.org/)
 - Scrape [JSON](https://docs.python.org/3/library/json.html) return from a web API call. Process in a configurable manner using [dpath](https://pypi.org/project/dpath/)
-- HTML text scrape using [lxml](https://lxml.de/) and [re](https://docs.python.org/3/library/re.html)
+- HTML text scrape using [lxml](https://lxml.de/) for Xpath search and [regular expressions (re)](https://docs.python.org/3/library/re.html)
+- Scrape PDF for table data using [pdftotext](https://www.xpdfreader.com/pdftotext-man.html)
+- Pre-rendering JavaScript on a page using [html-request](https://pypi.org/project/requests-html/)
 
 ## Proposed Methods for Remaining States
-- JS render required first
-- PDF scrape
 - Tableau app
+- Ingest from images (OCR) 
 - County-level page scraping
 
 ## Progress
-- 36 / 50 US states
+- 39 / 50 US states
   - :white_check_mark: Alabama
   - :white_check_mark: Alaska
   - :x: American Samoa
@@ -24,7 +25,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: Arkansas
   - :x: California
   - :x: Colorado
-  - :x: Connecticut
+  - :white_check_mark: Connecticut
   - :white_check_mark: Delaware
   - :x: District of Columbia
   - :white_check_mark: Florida
@@ -35,13 +36,13 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: Illinois
   - :white_check_mark: Indiana
   - :white_check_mark: Iowa
-  - :x: Kansas
+  - :white_check_mark: Kansas
   - :x: Kentucky
   - :white_check_mark: Lousiana
   - :white_check_mark: Maine
   - :x: Marshall Islands
   - :white_check_mark: Maryland
-  - :x: Massachusetts
+  - :white_check_mark: Massachusetts
   - :white_check_mark: Michigan
   - :x: Micronesia
   - :white_check_mark: Minnesota
@@ -78,7 +79,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: Wyoming
 - 0 / 9 districts, territories, and freely associated states
 
-## Python Modules Used
+## Noteable Python Modules Used
 - pandas
 - yaml
 - numpy
@@ -88,6 +89,7 @@ For any implemented method below, each state is completely configurable in [yaml
 - json
 - dpath.util
 - lxml
+- pdftotext (system utility, not python module of same name)
 
 ## TODO
 - Expand coverage internationally

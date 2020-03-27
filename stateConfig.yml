@@ -29,7 +29,6 @@ states:
     zeroPad: false
     pageOfTable: 5
     countyCol: 'Town'
-    numCols: 3
     sentinel: '*Data are preliminary and subject to change*'
   Delaware:
     type: 'api-json'
@@ -92,7 +91,6 @@ states:
     dateFormat: '%B_%d_%Y'
     pageOfTable: 1
     casesCol: 'Number'
-    numCols: 3
     sentinel: '*Ford and Miami Counties reported positive cases'
   Lousiana:
     type: 'api-json'
@@ -115,6 +113,14 @@ states:
     casesDpath: 'attributes/COVID19Cases'
     deathsDpath: 'attributes/COVID19Deaths'
     recoveredDpath: 'attributes/COVID19Recovered'
+  Massachusetts:
+    type: 'pdf'
+    url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
+    dateInUrl: true
+    dateFormat: '%B-%d-%Y'
+    pageOfTable: 1
+    casesCol: ''
+    sentinel: 'Sex'
   Michigan:
     type: 'table'
     url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
@@ -257,8 +263,6 @@ nocountyinfo:
 
 pdf:
   New Hampshire: 'https://www.nh.gov/covid19/' # hard
-  Kansas: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
-  Massassachusetts: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
 
 tableau:
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
