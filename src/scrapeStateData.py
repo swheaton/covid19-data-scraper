@@ -39,15 +39,15 @@ def getSiteContent(url):
     return content
 
 def mangleDateInUrl(stateConfig):
-    yesterday = datetime.today() - timedelta(days=1)
+    date = datetime.today()# - timedelta(days=1)
     if getOrDefault(stateConfig, 'zeroPad', True):
-        outDate = yesterday.strftime(stateConfig['dateFormat'])
+        outDate = date.strftime(stateConfig['dateFormat'])
     else:
         tokens = stateConfig['dateFormat'].split('%')
         outDate = tokens[0]
         tokens = tokens[1:]
         for token in tokens:
-            outDate = outDate + yesterday.strftime('%'+token).lstrip('0')
+            outDate = outDate + date.strftime('%'+token).lstrip('0')
     mangledUrl = stateConfig['url'].replace('{{INSERT_DATE}}', outDate)
     print(mangledUrl)
     return mangledUrl
@@ -202,11 +202,49 @@ def scrapePdf(stateConfig, state, pagecontent):
     if 'pageOfTable' in stateConfig:
         pageOfTable = '-f ' + str(stateConfig['pageOfTable']) + ' -l ' + str(stateConfig['pageOfTable'])
     os.system('pdftotext ' + pageOfTable +' -layout _tmp/tmp.pdf')
+    text = None
+    df = pd.DataFrame()
+
     with open('_tmp/tmp.txt', 'r') as txtFile:
-        print(txtFile.read())
-    #print(pagecontent)
-    #system('pdftotext ')
-    return pd.DataFrame()
+        lines = txtFile.readlines()
+        recording = False
+        countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
+        casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
+
+        headerMatcher = re.compile('\s*'+countyCol+'\s*'+casesCol)
+        for line in lines:
+            line = line.replace('\n', '')
+            if len(line) == 0:
+                continue
+
+            if recording:
+                if line.lstrip().startswith(stateConfig['sentinel']):
+                    break
+                tokens = line.split()
+
+                digInds = list(filter(lambda i: tokens[i].isdigit(), range(len(tokens))))
+                lastInd = 0
+                for digInd in digInds:
+                    county = ' '.join(tokens[lastInd : digInd])
+                    cases = tokens[digInd]
+                    lastInd = digInd + 1
+                    df = df.append({
+                        'County': county,
+                        'State': state,
+                        'Cases': cases,
+                        'Deaths': 0,  # update to non-zero
+                        'Recovered': 0}, ignore_index=True)  # update to non-zero
+
+            elif headerMatcher.match(line):
+                recording = True
+                print('found')
+    print(text)
+
+    df['Deaths'] = 0
+    df['Recovered'] = 0
+    df['State'] = state
+
+    return df
 
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)

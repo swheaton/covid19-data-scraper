@@ -27,7 +27,7 @@ states:
     dateInUrl: true
     dateFormat: '%m%d%Y'
     zeroPad: false
-    pageOfTable: 6
+    pageOfTable: 5
     countyCol: 'Town'
     numCols: 3
     sentinel: '*Data are preliminary and subject to change*'
