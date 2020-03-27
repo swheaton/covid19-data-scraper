@@ -85,6 +85,15 @@ states:
     casesDpath: 'attributes/Confirmed'
     deathsDpath: 'attributes/Deaths'
     recoveredDpath: 'attributes/Recovered'
+  Kansas:
+    type: 'pdf'
+    url: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_{{INSERT_DATE}}_.pdf'
+    dateInUrl: true
+    dateFormat: '%B_%d_%Y'
+    pageOfTable: 1
+    casesCol: 'Number'
+    numCols: 3
+    sentinel: '*Ford and Miami Counties reported positive cases'
   Lousiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
@@ -248,7 +257,6 @@ nocountyinfo:
 
 pdf:
   New Hampshire: 'https://www.nh.gov/covid19/' # hard
-  Connecticut: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary3252020.pdf?la=en' # easy
   Kansas: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_March_21_2020_.pdf' # easy
   Massassachusetts: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-march-21-2020/download' # easy
 

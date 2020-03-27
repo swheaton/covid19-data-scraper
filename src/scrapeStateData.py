@@ -221,6 +221,7 @@ def scrapePdf(stateConfig, state, pagecontent):
                 if line.lstrip().startswith(stateConfig['sentinel']):
                     break
                 tokens = line.split()
+                tokens = [token.replace('*','') for token in tokens]
 
                 digInds = list(filter(lambda i: tokens[i].isdigit(), range(len(tokens))))
                 lastInd = 0
