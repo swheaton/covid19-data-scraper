@@ -167,6 +167,13 @@ states:
     countyDpath: 'attributes/County'
     casesDpath: 'attributes/Total'
     deathsDpath: 'attributes/Deaths'
+  North Dakota:
+    type: 'img'
+    url: 'https://www.health.nd.gov/sites/www/files/documents/Files/MSS/img/Overall_County_ND_99.png'
+    imgLeftPx: 28
+    imgUpperPx: 108
+    imgLowerPx: 440
+    imgRightPx: 184
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
@@ -260,7 +267,7 @@ labnotcounty:
   - Nevada 'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9'
 
 nocountyinfo:
-  - California
+  - California 'cdph.ca.gov/covid19'
   - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
@@ -275,7 +282,6 @@ tableau:
 
 
 image:
-  - North Dakota: 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases' # easy
   - Vermont: 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
 
 text:

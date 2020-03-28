@@ -9,15 +9,15 @@ For any implemented method below, each state is completely configurable in [yaml
 - Scrape [JSON](https://docs.python.org/3/library/json.html) return from a web API call. Process in a configurable manner using [dpath](https://pypi.org/project/dpath/)
 - HTML text scrape using [lxml](https://lxml.de/) for Xpath search and [regular expressions (re)](https://docs.python.org/3/library/re.html)
 - Scrape PDF for table data using [pdftotext](https://www.xpdfreader.com/pdftotext-man.html)
+- Scrape image for table data using [Pillow](https://pillow.readthedocs.io/en/stable/) for image manipulation and [pytesseract](https://pypi.org/project/pytesseract/) optical character recognition (OCR) functionality
 - Pre-rendering JavaScript on a page using [html-request](https://pypi.org/project/requests-html/)
 
 ## Proposed Methods for Remaining States
 - Tableau app
-- Ingest from images (OCR) 
 - County-level page scraping
 
 ## Progress
-- 39 / 50 US states
+- 40 / 50 US states
   - :white_check_mark: Alabama
   - :white_check_mark: Alaska
   - :x: American Samoa
@@ -56,7 +56,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: New Mexico
   - :white_check_mark: New York
   - :white_check_mark: North Carolina
-  - :x: North Dakota
+  - :white_check_mark: North Dakota
   - :x: Northern Mariana Islands
   - :x: Ohio
   - :white_check_mark: Oklahoma

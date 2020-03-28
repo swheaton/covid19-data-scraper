@@ -13,6 +13,8 @@ from io import StringIO
 import re
 from datetime import datetime, timedelta
 import os
+from PIL import Image
+import pytesseract
 
 def getOrDefault(config: object, attr: object, default: object) -> object:
     retValue = default
@@ -250,6 +252,67 @@ def scrapePdf(stateConfig, state, pagecontent):
 
     return df
 
+def scrapeImage(stateConfig, state, pagecontent):
+    df = pd.DataFrame()
+    # Save the image
+    imgSuffix = stateConfig['url'][stateConfig['url'].rindex('.'):]
+    with open('_tmp/tmp' + imgSuffix, 'wb') as imgFile:
+        imgFile.write(pagecontent)
+
+
+    with Image.open('_tmp/tmp' + imgSuffix) as img:
+        img = img.crop((stateConfig['imgLeftPx'], stateConfig['imgUpperPx'], stateConfig['imgRightPx'], stateConfig['imgLowerPx']))
+        #img.show()
+        img.save('_tmp/tmp2' + imgSuffix)
+
+        # Use psm mode 6: 'Assume a single uniform block of text.'
+        customTesseractConfig = r'--psm 6'
+        data = pytesseract.image_to_string(img, config=customTesseractConfig)
+
+        lines = data.split('\n')
+        prevCount = 2 ** 31 # big number
+        allTokens = [line.split() for line in lines]
+
+        print(allTokens)
+        ind = 0
+        while ind < len(allTokens):
+            tokens = allTokens[ind]
+
+            tokens[-1] = ''.join([ch for ch in tokens[-1] if ch.isdigit()])
+            print('toks', tokens)
+
+
+            # Do we need to fix up missing '1' at beginning of previous county?
+            numCases = int(tokens[-1])
+            if numCases > prevCount:
+                # Remove and try again
+                print('num cases', numCases, 'greater than prev', prevCount, 'going back to redo', ' '.join(allTokens[ind-1][0:-1]))
+                df.drop(df.tail(1).index, inplace=True)
+                allTokens[ind-1][-1] = '1' + allTokens[ind-1][-1]
+                ind -= 1
+                prevCount = int(df.at[len(df)-1, 'Cases'])
+                print(prevCount)
+                continue
+
+            prevCount = numCases
+            df = df.append({
+                'County': ' '.join(tokens[0 : -1]),
+                'State': state,
+                'Cases': numCases,
+                'Deaths': 0,  # update to non-zero
+                'Recovered': 0}, ignore_index=True)  # update to non-zero
+            ind += 1
+
+    return df
+
+scrapeFuncs = {
+    'img': scrapeImage,
+    'pdf': scrapePdf,
+    'table': scrapeHtmlTable,
+    'csv': scrapeCsv,
+    'text': scrapeText
+}
+
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
@@ -280,18 +343,8 @@ with open('stateConfig.yml') as configFile:
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        if 'type' not in stateConfig or stateConfig['type'] == 'table':
-            statedf = scrapeHtmlTable(stateConfig, state, pagecontent)
-        elif stateConfig['type'] == 'api-json':
-            statedf = scrapeApiJson(stateConfig, state, pagecontent)
-        elif stateConfig['type'] == 'text':
-            statedf = scrapeText(stateConfig, state, pagecontent)
-        elif stateConfig['type'] == 'csv':
-            statedf = scrapeCsv(stateConfig, state, pagecontent)
-        elif stateConfig['type'] == 'pdf':
-            statedf = scrapePdf(stateConfig, state, pagecontent)
-        else:
-            statedf = pd.DataFrame()
+        type = getOrDefault(stateConfig, 'type', 'table')
+        statedf = scrapeFuncs[type](stateConfig, state, pagecontent)
 
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
