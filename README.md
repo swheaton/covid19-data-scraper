@@ -90,6 +90,8 @@ For any implemented method below, each state is completely configurable in [yaml
 - dpath.util
 - lxml
 - pdftotext (system utility, not python module of same name)
+- pillow
+- pytesseract
 
 ## TODO
 - Expand coverage internationally
