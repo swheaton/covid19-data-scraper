@@ -133,3 +133,4 @@ dmypy.json
 
 _tmp/
 data/out.csv
+.DS_Store

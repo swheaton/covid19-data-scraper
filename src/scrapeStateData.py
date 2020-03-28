@@ -48,6 +48,9 @@ def mangleDateInUrl(stateConfig):
         tokens = tokens[1:]
         for token in tokens:
             outDate = outDate + date.strftime('%'+token).lstrip('0')
+
+    if getOrDefault(stateConfig, 'toLower', False):
+        outDate = outDate.lower()
     mangledUrl = stateConfig['url'].replace('{{INSERT_DATE}}', outDate)
     print(mangledUrl)
     return mangledUrl
@@ -87,7 +90,7 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     #   And also zero-width space first...
     if df['Cases'].dtype == np.object:
         df['Cases'] = df['Cases'].str.replace('\u200b', '')
-        df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', 1))
+        df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', '1'))
         df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
 
     print(df)
@@ -205,7 +208,7 @@ def scrapePdf(stateConfig, state, pagecontent):
     text = None
     df = pd.DataFrame()
 
-    with open('_tmp/tmp.txt', 'r') as txtFile:
+    with open('_tmp/tmp.txt', 'r', encoding = "ISO-8859-1") as txtFile:
         lines = txtFile.readlines()
         recording = False
         countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
@@ -252,9 +255,15 @@ with open('stateConfig.yml') as configFile:
     configs = yaml.safe_load(configFile)
 
     # if specified on command line, do only those states. otherwise do all
-    states = configs['states']
+    states = list(configs['states'].keys())
+    args = sys.argv
+
     if len(sys.argv) > 1:
-        states = sys.argv[1:]
+        if sys.argv[1] == '-a':
+
+            states = states[states.index(sys.argv[2]) : ]
+        else:
+            states = sys.argv[1:]
 
     # Process each state
     aggrDf = pd.DataFrame()

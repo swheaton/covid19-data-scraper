@@ -44,11 +44,14 @@ states:
     countyListDpath: 'features'
     countyDpath: 'attributes/County_1'
     casesDpath: 'attributes/CasesAll'
-    deathsDpath: 'attributes/FLandNonFLDeaths'
+    deathsDpath: 'attributes/Deaths1'
   Georgia:
     type: 'table'
-    url: 'https://dph.georgia.gov/covid-19-daily-status-report'
-    tableIndex: 2
+    url: 'https://d20s4vd27d0hk0.cloudfront.net/?initialWidth=746&childId=covid19dashdph&parentTitle=COVID-19%20Daily%20Status%20Report%20%7C%20Georgia%20Department%20of%20Public%20Health&parentUrl=https%3A%2F%2Fdph.georgia.gov%2Fcovid-19-daily-status-report'
+    tableIndex: 5
+    casesCol: 'No. Cases'
+    deathsCol: 'No. Deaths'
+    countyCol: 'COVID-19 Confirmed Cases By County:'
     footerRowsToSkip: 1
   Hawaii:
     type: 'text'
@@ -118,6 +121,7 @@ states:
     url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
     dateInUrl: true
     dateFormat: '%B-%d-%Y'
+    toLower: true
     pageOfTable: 1
     casesCol: ''
     sentinel: 'Sex'
@@ -172,21 +176,21 @@ states:
   Oregon:
     type: 'table'
     url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
-    casesCol: 'Positive'
+    casesCol: 'Positive†'
     deathsCol: 'Deaths*'
     footerRowsToSkip: 1
     tableIndex: 1
   Pennsylvania:
     type: 'table'
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
-    tableIndex: 1
+    tableIndex: 3
   Rhode Island:
     type: 'table'
     url: 'https://health.ri.gov/data/covid-19/'
     casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
     countyCol: 'City/Town'
     doJsRender: true
-    tableIndex: 4
+    tableIndex: 7
     sleepAfterRender: 10
     replaceLess5: '1'
   South Carolina:
@@ -221,7 +225,6 @@ states:
     url: 'https://coronavirus-dashboard.utah.gov/'
     doJsRender: true
     sleepAfterRender: 10
-    retries: 5
     countyCol: 'Jurisdiction'
     footerRowsToSkip: 1
   Washington:
@@ -235,7 +238,7 @@ states:
   West Virginia:
     type: 'text'
     url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
-    dataXpath: '//*[@id="WebPartWPQ6"]/p'
+    dataXpath: '//*[@id="column"]/div/div[7]/p[1]'
     startDelim: 'Counties with positive cases: '
     sentinel: '</p>'
   Wisconsin:
