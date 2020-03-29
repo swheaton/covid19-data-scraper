@@ -201,7 +201,10 @@ def scrapeCsv(stateConfig, state, pagecontent):
 def scrapePdf(stateConfig, state, pagecontent):
     with open('_tmp/tmp.pdf', 'wb') as pdfFile:
         pdfFile.write(pagecontent)
-    os.remove('_tmp/tmp.txt')
+    try:
+        os.remove('_tmp/tmp.txt')
+    except FileNotFoundError:
+        pass
 
     pageOfTable = ''
     if 'pageOfTable' in stateConfig:
@@ -307,6 +310,7 @@ def scrapeImage(stateConfig, state, pagecontent):
 
 scrapeFuncs = {
     'img': scrapeImage,
+    'api-json': scrapeApiJson,
     'pdf': scrapePdf,
     'table': scrapeHtmlTable,
     'csv': scrapeCsv,

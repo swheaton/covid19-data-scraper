@@ -44,7 +44,7 @@ states:
     countyListDpath: 'features'
     countyDpath: 'attributes/County_1'
     casesDpath: 'attributes/CasesAll'
-    deathsDpath: 'attributes/Deaths1'
+    deathsDpath: 'attributes/Deaths'
   Georgia:
     type: 'table'
     url: 'https://d20s4vd27d0hk0.cloudfront.net/?initialWidth=746&childId=covid19dashdph&parentTitle=COVID-19%20Daily%20Status%20Report%20%7C%20Georgia%20Department%20of%20Public%20Health&parentUrl=https%3A%2F%2Fdph.georgia.gov%2Fcovid-19-daily-status-report'
@@ -89,7 +89,7 @@ states:
     recoveredDpath: 'attributes/Recovered'
   Kansas:
     type: 'pdf'
-    url: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_{{INSERT_DATE}}_.pdf'
+    url: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_{{INSERT_DATE}}.pdf'
     dateInUrl: true
     dateFormat: '%B_%d_%Y'
     pageOfTable: 1
@@ -190,6 +190,7 @@ states:
   Pennsylvania:
     type: 'table'
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
+    casesCol: 'Number of Cases'
     tableIndex: 3
   Rhode Island:
     type: 'table'
