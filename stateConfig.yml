@@ -96,7 +96,7 @@ states:
     pageOfTable: 1
     casesCol: 'Number'
     sentinel: '*Ford and Miami Counties reported positive cases'
-  Lousiana:
+  Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
