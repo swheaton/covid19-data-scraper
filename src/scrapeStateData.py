@@ -134,6 +134,9 @@ def scrapeApiJson(stateConfig, state, pagecontent):
 
     for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
         county = dpath.util.get(countyJson, stateConfig['countyDpath'])
+
+        if getOrDefault(stateConfig, 'ignoreStateAsCounty', False) and county == state:
+            continue
         numCases = dpath.util.get(countyJson, stateConfig['casesDpath'])
         numDeaths = dpath.util.get(countyJson, stateConfig['deathsDpath']) if 'deathsDpath' in stateConfig else 0
         numRecovered = dpath.util.get(countyJson, stateConfig['recoveredDpath']) if 'recoveredDpath' in stateConfig else 0

@@ -32,7 +32,7 @@ states:
     sentinel: '*Data are preliminary and subject to change*'
   Delaware:
     type: 'api-json'
-    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_Time_VIEW/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
+    url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_Time_VIEW/FeatureServer/0/query?f=json&where=NAME%3C%3E%27Statewide%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/NAME'
     casesDpath: 'attributes/Presumptive_Positive'
@@ -69,6 +69,7 @@ states:
     type: 'api-json'
     url: 'http://www.dph.illinois.gov/sitefiles/COVIDTestResults.json'
     countyListDpath: 'characteristics_by_county/values'
+    ignoreStateAsCounty: true
     countyDpath: 'County'
     casesDpath: 'confirmed_cases'
     deathsDpath: 'deaths'
