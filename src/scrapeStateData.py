@@ -341,6 +341,11 @@ with open('stateConfig.yml') as configFile:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
 
+        type = getOrDefault(stateConfig, 'type', 'table')
+        if type not in scrapeFuncs:
+            print('Unsupported type', type)
+            continue
+
         if getOrDefault(stateConfig, 'dateInUrl', False):
             stateConfig['url'] = mangleDateInUrl(stateConfig)
 
@@ -350,9 +355,7 @@ with open('stateConfig.yml') as configFile:
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        type = getOrDefault(stateConfig, 'type', 'table')
         statedf = scrapeFuncs[type](stateConfig, state, pagecontent)
-
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
