@@ -89,13 +89,13 @@ states:
     deathsDpath: 'attributes/Deaths'
     recoveredDpath: 'attributes/Recovered'
   Kansas:
-    type: 'pdf'
-    url: 'https://khap2.kdhe.state.ks.us/NewsRelease/COVID19/COVID-19_{{INSERT_DATE}}.pdf'
-    dateInUrl: true
-    dateFormat: '%B_%d_%Y'
-    pageOfTable: 1
-    casesCol: 'Number'
-    sentinel: '*Ford and Miami Counties reported positive cases'
+    type: 'api-json'
+    url: 'https://services9.arcgis.com/Q6wTdPdCh608iNrJ/arcgis/rest/services/COVID19_CountyStatus_KDHE/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/COUNTY'
+    casesDpath: 'attributes/Covid_Conf'
+    deathsDpath: 'attributes/Covid_Deat'
+    recoveredDpath: 'attributes/Covid_Reco'
   Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
@@ -260,7 +260,7 @@ states:
   Wyoming:
     type: 'text'
     url: 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
-    dataXpath: '//*[@id="et-boc"]/div/div/div/div[3]/div[2]/div/div/p'
+    dataXpath: '//*[@id="et-boc"]/div/div/div/div[4]/div[2]/div/div/p'
     startDelim: 'Cases by County</strong><br>'
     sentinel: '</p>'
     eltDelim: '<br>'
