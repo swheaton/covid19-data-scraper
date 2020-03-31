@@ -54,13 +54,11 @@ states:
     countyCol: 'COVID-19 Confirmed Cases By County:'
     footerRowsToSkip: 1
   Hawaii:
-    type: 'text'
-    url: 'https://health.hawaii.gov/coronavirusdisease2019/'
-    dataXpath: '//*[@id="main"]/div[2]/div[1]/div/div[1]/div[1]/dl'
-    startDelim: '</dd>\n<dd>'
-    eltDelim: '</dd>\n<dd>'
-    sentinel: '\n<dd>Pending'
-    newInParen: true
+    type: 'table'
+    url: 'https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/'
+    headerRowsToSkip: 1
+    casesCol: 'Total'
+    footerRowsToSkip: 5
   Idaho:
     type: 'table'
     url: 'https://coronavirus.idaho.gov/'
@@ -134,6 +132,7 @@ states:
   Minnesota:
     type: 'table'
     url: 'https://www.health.state.mn.us/diseases/coronavirus/situation.html'
+    tableIndex: 1
   Mississippi:
     type: 'table'
     url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
@@ -200,7 +199,7 @@ states:
     casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
     countyCol: 'City/Town'
     doJsRender: true
-    tableIndex: 5
+    tableIndex: 8
     sleepAfterRender: 10
     replaceLess5: '1'
   South Carolina:
