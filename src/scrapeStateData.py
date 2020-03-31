@@ -213,7 +213,6 @@ def scrapePdf(stateConfig, state, pagecontent):
     if 'pageOfTable' in stateConfig:
         pageOfTable = '-f ' + str(stateConfig['pageOfTable']) + ' -l ' + str(stateConfig['pageOfTable'])
     os.system('pdftotext ' + pageOfTable +' -layout _tmp/tmp.pdf')
-    text = None
     df = pd.DataFrame()
 
     with open('_tmp/tmp.txt', 'r', encoding = "ISO-8859-1") as txtFile:
@@ -250,7 +249,7 @@ def scrapePdf(stateConfig, state, pagecontent):
             elif headerMatcher.match(line):
                 recording = True
                 print('found')
-    print(text)
+    print(lines)
 
     df['Deaths'] = 0
     df['Recovered'] = 0
