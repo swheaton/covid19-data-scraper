@@ -86,14 +86,6 @@ states:
     casesDpath: 'attributes/Confirmed'
     deathsDpath: 'attributes/Deaths'
     recoveredDpath: 'attributes/Recovered'
-  Kansas:
-    type: 'tableau'
-    url: 'https://services9.arcgis.com/Q6wTdPdCh608iNrJ/arcgis/rest/services/COVID19_CountyStatus_KDHE/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/COUNTY'
-    casesDpath: 'attributes/Covid_Conf'
-    deathsDpath: 'attributes/Covid_Deat'
-    recoveredDpath: 'attributes/Covid_Reco'
   Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
@@ -280,6 +272,7 @@ pdf:
 tableau:
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
+  - Kansas: ''
   - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
   - Ohio: 'https://public.tableau.com/views/OverviewDashboard_15852499073250/DashboardOverview_1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&iframeSizedToWindow=true&:loadOrderID=0'
 

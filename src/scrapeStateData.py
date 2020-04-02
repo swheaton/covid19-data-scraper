@@ -22,6 +22,7 @@ def getOrDefault(config: object, attr: object, default: object) -> object:
         retValue = config[attr]
     return retValue
 
+
 def getSiteContent(url):
     # Doing this to look more like a browser so we won't get denied.
     header = {
@@ -39,6 +40,7 @@ def getSiteContent(url):
         r = urllib.request.urlopen(url, context=context)
         content = r.read()
     return content
+
 
 def mangleDateInUrl(stateConfig):
     date = datetime.today()# - timedelta(days=1)
@@ -61,6 +63,7 @@ def mangleDateInUrl(stateConfig):
     print(mangledUrl)
     return mangledUrl
 
+
 def doJsRender(url, tosleep):
     content = None
     with HTMLSession() as session:
@@ -68,6 +71,7 @@ def doJsRender(url, tosleep):
         r.html.render(retries=5, timeout=0, sleep=tosleep)
         content = r.html.html
     return content
+
 
 def scrapeHtmlTable(stateConfig, state, pagecontent):
     html = pagecontent
@@ -132,6 +136,7 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
 
     return df
 
+
 def scrapeApiJson(stateConfig, state, pagecontent):
     df = pd.DataFrame()
 
@@ -153,6 +158,7 @@ def scrapeApiJson(stateConfig, state, pagecontent):
                 'Recovered': numRecovered or 0} , ignore_index=True)
 
     return df
+
 
 def scrapeText(stateConfig, state, pagecontent):
     tree = htmlparse.fromstring(pagecontent)
@@ -194,6 +200,7 @@ def scrapeText(stateConfig, state, pagecontent):
 
     return df
 
+
 def scrapeCsv(stateConfig, state, pagecontent):
     footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
     df = pd.read_csv(StringIO(pagecontent), skipfooter=footerRowsToSkip)
@@ -205,6 +212,7 @@ def scrapeCsv(stateConfig, state, pagecontent):
     df['Recovered'] = 0
     df['State'] = state
     return df
+
 
 def scrapePdf(stateConfig, state, pagecontent):
     with open('_tmp/tmp.pdf', 'wb') as pdfFile:
@@ -261,6 +269,7 @@ def scrapePdf(stateConfig, state, pagecontent):
     df['State'] = state
 
     return df
+
 
 def scrapeImage(stateConfig, state, pagecontent):
     df = pd.DataFrame()
