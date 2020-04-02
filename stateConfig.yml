@@ -26,8 +26,8 @@ states:
     url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
     dateInUrl: true
     dateFormat: '%m%d%Y'
-    zeroPad: false
-    pageOfTable: 9
+    zeroPad: 'first'
+    pageOfTable: 10
     countyCol: 'Town'
     sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -87,7 +87,7 @@ states:
     deathsDpath: 'attributes/Deaths'
     recoveredDpath: 'attributes/Recovered'
   Kansas:
-    type: 'api-json'
+    type: 'tableau'
     url: 'https://services9.arcgis.com/Q6wTdPdCh608iNrJ/arcgis/rest/services/COVID19_CountyStatus_KDHE/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/COUNTY'
@@ -121,6 +121,7 @@ states:
     url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
     dateInUrl: true
     dateFormat: '%B-%d-%Y'
+    zeroPad: 'all'
     toLower: true
     pageOfTable: 1
     casesCol: ''
@@ -132,7 +133,7 @@ states:
   Minnesota:
     type: 'table'
     url: 'https://www.health.state.mn.us/diseases/coronavirus/situation.html'
-    tableIndex: 1
+    tableIndex: 2
   Mississippi:
     type: 'table'
     url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
@@ -152,7 +153,7 @@ states:
     url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/COUNTY_LAB'
-    casesDpath: 'attributes/TOTAL_CASE'
+    casesDpath: 'attributes/TOTAL_CASES'
   New Mexico:
     type: 'table'
     url: 'https://cv.nmhealth.org/cases-by-county/'

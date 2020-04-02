@@ -42,9 +42,13 @@ def getSiteContent(url):
 
 def mangleDateInUrl(stateConfig):
     date = datetime.today()# - timedelta(days=1)
-    if getOrDefault(stateConfig, 'zeroPad', True):
+    zeroPad = getOrDefault(stateConfig, 'zeroPad', 'none')
+    if zeroPad == 'none':
         outDate = date.strftime(stateConfig['dateFormat'])
-    else:
+    elif zeroPad == 'first':
+        tokens = stateConfig['dateFormat'].split('%')
+        outDate = tokens[0] + date.strftime('%'+tokens[1]).lstrip('0') + date.strftime('%' + '%'.join(tokens[2:]))
+    elif zeroPad == 'all':
         tokens = stateConfig['dateFormat'].split('%')
         outDate = tokens[0]
         tokens = tokens[1:]
@@ -86,6 +90,7 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
     df.rename(columns=columnRename, inplace=True)
 
+    df = df[df['County'].notnull()]
     print(df)
 
     # Extract number if cases col is string.
