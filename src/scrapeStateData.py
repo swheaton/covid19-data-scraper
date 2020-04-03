@@ -91,7 +91,9 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
 
     countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
     casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
-    columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
+    deathsCol = getOrDefault(stateConfig, 'deathsCol', 'Deaths')
+    recoveredCol = getOrDefault(stateConfig, 'recoveredCol', 'Recovered')
+    columnRename = dict(zip((countyCol, casesCol, deathsCol, recoveredCol), ('County', 'Cases', 'Deaths', 'Recovered')))
     df.rename(columns=columnRename, inplace=True)
 
     df = df[df['County'].notnull()]
