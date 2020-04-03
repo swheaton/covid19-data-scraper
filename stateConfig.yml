@@ -8,11 +8,11 @@ states:
     casesDpath: 'attributes/CONFIRMED'
     deathsDpath: 'attributes/DIED'
   Alaska:
-    type: 'table'
-    url: 'http://dhss.alaska.gov/dph/Epi/id/Pages/COVID-19/monitoring.aspx'
-    countyCol: 'Unnamed: 0'
-    footerRowsToSkip: 1
-    casesCol: 'Total'
+    type: 'api-json'
+    url: 'https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/COVID_Cases_public/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&groupByFieldsForStatistics=County&orderByFields=County%20asc&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22County%22%2C%22outStatisticFieldName%22%3A%22Cases%22%7D%5D&cacheHint=true'
+    countyListDpath: 'features'
+    countyDpath: 'attributes/County'
+    casesDpath: 'attributes/Cases'
   Arkansas:
     type: 'api-json'
     url: 'https://services.arcgis.com/PwY9ZuZRDiI5nXUB/ArcGIS/rest/services/ADH_COVID19_Positive_Test_Results/FeatureServer/0/query?f=json&where=county_nam%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -54,15 +54,11 @@ states:
     countyCol: 'COVID-19 Confirmed Cases By County:'
     footerRowsToSkip: 1
   Hawaii:
-    type: 'table'
+    type: 'skiptable'
     url: 'https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/'
     headerRowsToSkip: 1
     casesCol: 'Total'
     footerRowsToSkip: 5
-  Idaho:
-    type: 'table'
-    url: 'https://coronavirus.idaho.gov/'
-    footerRowsToSkip: 1
   Illinois:
     type: 'api-json'
     url: 'http://www.dph.illinois.gov/sitefiles/COVIDTestResults.json'
@@ -270,6 +266,7 @@ pdf:
   New Hampshire: 'https://www.nh.gov/covid19/' # hard
 
 tableau:
+  - Idaho: ''
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Kansas: ''
