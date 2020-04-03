@@ -42,24 +42,24 @@ def getSiteContent(url):
     return content
 
 
-def mangleDateInUrl(stateConfig):
+def mangleDateInUrl(dateInUrlConfig, url):
     date = datetime.today()# - timedelta(days=1)
-    zeroPad = getOrDefault(stateConfig, 'zeroPad', 'none')
+    zeroPad = getOrDefault(dateInUrlConfig, 'zeroPad', 'none')
     if zeroPad == 'none':
-        outDate = date.strftime(stateConfig['dateFormat'])
+        outDate = date.strftime(dateInUrlConfig['dateFormat'])
     elif zeroPad == 'first':
-        tokens = stateConfig['dateFormat'].split('%')
+        tokens = dateInUrlConfig['dateFormat'].split('%')
         outDate = tokens[0] + date.strftime('%'+tokens[1]).lstrip('0') + date.strftime('%' + '%'.join(tokens[2:]))
     elif zeroPad == 'all':
-        tokens = stateConfig['dateFormat'].split('%')
+        tokens = dateInUrlConfig['dateFormat'].split('%')
         outDate = tokens[0]
         tokens = tokens[1:]
         for token in tokens:
             outDate = outDate + date.strftime('%'+token).lstrip('0')
 
-    if getOrDefault(stateConfig, 'toLower', False):
+    if getOrDefault(dateInUrlConfig, 'toLower', False):
         outDate = outDate.lower()
-    mangledUrl = stateConfig['url'].replace('{{INSERT_DATE}}', outDate)
+    mangledUrl = url.replace('{{INSERT_DATE}}', outDate)
     print(mangledUrl)
     return mangledUrl
 
@@ -71,6 +71,18 @@ def doJsRender(url, tosleep):
         r.html.render(retries=5, timeout=0, sleep=tosleep)
         content = r.html.html
     return content
+
+
+def doEstablishAndExtractSession(stateConfig):
+    sessionEstablishUrl = stateConfig['sessionEstablishUrl']
+    with requests.Session() as session:
+        response = session.get(sessionEstablishUrl)
+        sessionId = response.headers[stateConfig['sessionIdHeader']]
+        url = stateConfig['url'].replace('{{SESSION_ID}}', sessionId)
+        print(stateConfig['formData'])
+        print(url)
+        response2 = session.post(url, data=stateConfig['formData'])
+        return response2.text
 
 
 def scrapeHtmlTable(stateConfig, state, pagecontent):
@@ -140,22 +152,31 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
 def scrapeApiJson(stateConfig, state, pagecontent):
     df = pd.DataFrame()
 
-    jsonResult = json.loads(pagecontent)
+    with open('blah.out', 'w') as b:
+        b.write(str(pagecontent))
 
-    for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
-        county = dpath.util.get(countyJson, stateConfig['countyDpath'])
+    jsonResult = json.loads(str(pagecontent))
+    print(jsonResult, indent=4)
+    return df
 
-        if getOrDefault(stateConfig, 'ignoreStateAsCounty', False) and county == state:
-            continue
-        numCases = dpath.util.get(countyJson, stateConfig['casesDpath'])
-        numDeaths = dpath.util.get(countyJson, stateConfig['deathsDpath']) if 'deathsDpath' in stateConfig else 0
-        numRecovered = dpath.util.get(countyJson, stateConfig['recoveredDpath']) if 'recoveredDpath' in stateConfig else 0
-        df = df.append( {
-                'County' : county ,
-                'State' : state,
-                'Cases': numCases or 0,
-                'Deaths': numDeaths or 0,
-                'Recovered': numRecovered or 0} , ignore_index=True)
+    if getOrDefault(stateConfig, 'listIndexLookup', False):
+        dpath.util.get(jsonResult)
+        pass
+    else:
+        for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
+            county = dpath.util.get(countyJson, stateConfig['countyDpath'])
+
+            if getOrDefault(stateConfig, 'ignoreStateAsCounty', False) and county == state:
+                continue
+            numCases = dpath.util.get(countyJson, stateConfig['casesDpath'])
+            numDeaths = dpath.util.get(countyJson, stateConfig['deathsDpath']) if 'deathsDpath' in stateConfig else 0
+            numRecovered = dpath.util.get(countyJson, stateConfig['recoveredDpath']) if 'recoveredDpath' in stateConfig else 0
+            df = df.append( {
+                    'County' : county ,
+                    'State' : state,
+                    'Cases': numCases or 0,
+                    'Deaths': numDeaths or 0,
+                    'Recovered': numRecovered or 0} , ignore_index=True)
 
     return df
 
@@ -354,21 +375,26 @@ with open('stateConfig.yml') as configFile:
         print('DOING STATE', state)
         stateConfig = configs['states'][state]
 
-        type = getOrDefault(stateConfig, 'type', 'table')
-        if type not in scrapeFuncs:
-            print('Unsupported type', type)
+        scrapeType = getOrDefault(stateConfig, 'type', 'table')
+        if scrapeType not in scrapeFuncs:
+            print('Unsupported type', scrapeType)
             continue
 
-        if getOrDefault(stateConfig, 'dateInUrl', False):
-            stateConfig['url'] = mangleDateInUrl(stateConfig)
+        if 'dateInUrl' in stateConfig:
+            stateConfig['url'] = mangleDateInUrl(stateConfig['dateInUrl'], stateConfig['url'])
 
-        if 'doJsRender' in stateConfig and stateConfig['doJsRender']:
+        shouldDoJsRender = getOrDefault(stateConfig, 'doJsRender', False)
+        shouldDoEstablishAndExtractSession = getOrDefault(stateConfig, 'doEstablishAndExtractSession', False)
+        if shouldDoJsRender:
             sleepAfterRender = getOrDefault(stateConfig, 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
+        elif shouldDoEstablishAndExtractSession:
+            print('here??')
+            pagecontent = doEstablishAndExtractSession(stateConfig)
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        statedf = scrapeFuncs[type](stateConfig, state, pagecontent)
+        statedf = scrapeFuncs[scrapeType](stateConfig, state, pagecontent)
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 

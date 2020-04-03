@@ -24,9 +24,9 @@ states:
   Connecticut:
     type: 'pdf'
     url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
-    dateInUrl: true
-    dateFormat: '%m%d%Y'
-    zeroPad: 'first'
+    dateInUrl:
+      dateFormat: '%m%d%Y'
+      zeroPad: 'first'
     pageOfTable: 10
     countyCol: 'Town'
     sentinel: '*Data are preliminary and subject to change*'
@@ -86,6 +86,18 @@ states:
     casesDpath: 'attributes/Confirmed'
     deathsDpath: 'attributes/Deaths'
     recoveredDpath: 'attributes/Recovered'
+  Kansas:
+    type: 'api-json'
+    url: 'https://public.tableau.com/vizql/w/COVID-19Data_15851817634470/v/CountyCounts/bootstrapSession/sessions/{{SESSION_ID}}'
+    doEstablishAndExtractSession: true
+    sessionEstablishUrl: 'https://public.tableau.com/views/COVID-19Data_15851817634470/CountyCounts?%3AshowVizHome=no'
+    sessionIdHeader: 'x-session-id'
+    formData:
+      sheet_id: 'County%20Counts'
+    listIndexLookup: true
+    countyListDpath: ''
+    casesValueDpath: ''
+    casesIndexDpath: ''
   Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
@@ -111,10 +123,10 @@ states:
   Massachusetts:
     type: 'pdf'
     url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
-    dateInUrl: true
-    dateFormat: '%B-%d-%Y'
-    zeroPad: 'all'
-    toLower: true
+    dateInUrlFormat:
+      dateFormat: '%B-%d-%Y'
+      zeroPad: 'all'
+      toLower: true
     pageOfTable: 1
     casesCol: ''
     sentinel: 'Sex'
