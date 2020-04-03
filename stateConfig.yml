@@ -27,7 +27,7 @@ states:
     dateInUrl: true
     dateFormat: '%m%d%Y'
     zeroPad: 'first'
-    pageOfTable: 10
+    pageOfTable: 11
     countyCol: 'Town'
     sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -101,9 +101,8 @@ states:
     url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_Case_Counts_by_County/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
     countyListDpath: 'features'
     countyDpath: 'attributes/COUNTY'
-    casesDpath: 'attributes/COVID19Cases'
-    deathsDpath: 'attributes/COVID19Deaths'
-    recoveredDpath: 'attributes/COVID19Recovered'
+    casesDpath: 'attributes/TotalCaseCount'
+    deathsDpath: 'attributes/TotalDeathCount'
   Massachusetts:
     type: 'pdf'
     url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
@@ -145,11 +144,6 @@ states:
   New Mexico:
     type: 'table'
     url: 'https://cv.nmhealth.org/cases-by-county/'
-  New York:
-    type: 'table'
-    url: 'https://coronavirus.health.ny.gov/county-county-breakdown-positive-cases'
-    casesCol: 'Positive Cases'
-    footerRowsToSkip: 1
   North Carolina:
     type: 'api-json'
     url: 'https://services.arcgis.com/iFBq2AW9XO0jYYF7/arcgis/rest/services/NCCovid19/FeatureServer/0/query?f=json&where=county%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -202,13 +196,15 @@ states:
     type: 'table'
     url: 'https://doh.sd.gov/news/Coronavirus.aspx'
     tableIndex: 2
-    casesCol: '# of Cases'
+    casesCol: 'Total Positive Cases'
+    recoveredCol: '# Recovered'
     footerRowsToSkip: 1
   Tennessee:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
-    casesCol: 'Positive'
-    countyCol: 'Patient county name'
+    casesCol: 'positives'
+    countyCol: 'Unnamed: 0'
+    deathsCol: 'deaths'
     tableIndex: 5
     footerRowsToSkip: 1
   Texas:
@@ -234,7 +230,7 @@ states:
     casesCol: 'Positive/Confirmed Cases'
     footerRowsToSkip: 1
   West Virginia:
-    type: 'text'
+    type: 'post'
     url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
     dataXpath: '//*[@id="column"]/div/div[6]/p[1]'
     startDelim: 'Counties with positive cases: '
@@ -267,6 +263,7 @@ pdf:
 
 tableau:
   - Idaho: ''
+  - New York: ''
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Kansas: ''
