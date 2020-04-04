@@ -35,7 +35,7 @@ Hale,Alabama,3,0,0
 Henry,Alabama,2,0,0
 Houston,Alabama,12,0,0
 Jackson,Alabama,12,1,0
-Jefferson,Alabama,364,0,0
+Jefferson,Alabama,369,0,0
 Lamar,Alabama,1,0,0
 Lauderdale,Alabama,14,1,0
 Lawrence,Alabama,4,0,0
@@ -62,7 +62,7 @@ Sumter,Alabama,7,0,0
 Talladega,Alabama,12,0,0
 Tallapoosa,Alabama,20,1,0
 Tuscaloosa,Alabama,41,0,0
-Walker,Alabama,48,0,0
+Walker,Alabama,49,0,0
 Washington,Alabama,5,1,0
 Wilcox,Alabama,6,0,0
 Winston,Alabama,3,0,0
@@ -551,6 +551,50 @@ Wheeler,Georgia,1,0,0
 Wilcox,Georgia,1,0,0
 Wilkinson,Georgia,1,0,0
 Unknown,Georgia,264,4,0
+Washington,Idaho,1,0,0
+Valley,Idaho,3,0,0
+Twin Falls,Idaho,33,0,0
+Teton,Idaho,3,0,0
+Shoshone,Idaho,0,0,0
+Power,Idaho,0,0,0
+Payette,Idaho,5,0,0
+Owyhee,Idaho,2,0,0
+Oneida,Idaho,0,0,0
+Nez Perce,Idaho,13,0,0
+Minidoka,Idaho,1,0,0
+Madison,Idaho,4,0,0
+Lincoln,Idaho,7,0,0
+Lewis,Idaho,1,0,0
+Lemhi,Idaho,0,0,0
+Latah,Idaho,1,0,0
+Kootenai,Idaho,37,0,0
+Jerome,Idaho,11,0,0
+Jefferson,Idaho,3,0,0
+Idaho,Idaho,2,0,0
+Gooding,Idaho,1,0,0
+Gem,Idaho,7,0,0
+Fremont,Idaho,1,0,0
+Franklin,Idaho,0,0,0
+Elmore,Idaho,10,0,0
+Custer,Idaho,2,0,0
+Clearwater,Idaho,0,0,0
+Clark,Idaho,0,0,0
+Cassia,Idaho,4,0,0
+Caribou,Idaho,0,0,0
+Canyon,Idaho,89,0,0
+Camas,Idaho,1,0,0
+Butte,Idaho,0,0,0
+Boundary,Idaho,0,0,0
+Bonneville,Idaho,5,0,0
+Bonner,Idaho,2,0,0
+Boise,Idaho,0,0,0
+Blaine,Idaho,405,0,0
+Bingham,Idaho,2,0,0
+Benewah,Idaho,0,0,0
+Bear Lake,Idaho,0,0,0
+Bannock,Idaho,5,0,0
+Adams,Idaho,1,0,0
+Ada,Idaho,351,0,0
 Chicago,Illinois,3815,57,0
 Suburban Cook,Illinois,0,0,0
 Adams,Illinois,2,0,0
@@ -846,6 +890,52 @@ Decatur,Iowa,0,0,0
 Wayne,Iowa,0,0,0
 Appanoose,Iowa,1,0,0
 Lee,Iowa,0,0,0
+Wyandotte County,Kansas,131,0,0
+Woodson County,Kansas,3,0,0
+Sumner County,Kansas,2,0,0
+Stevens County,Kansas,1,0,0
+Stafford County,Kansas,1,0,0
+Shawnee County,Kansas,24,0,0
+Sedgwick County,Kansas,85,0,0
+Saline County,Kansas,4,0,0
+Riley County,Kansas,11,0,0
+Reno County,Kansas,9,0,0
+Pratt County,Kansas,1,0,0
+Pottawatomie County,Kansas,2,0,0
+Ottawa County,Kansas,1,0,0
+Osborne County,Kansas,1,0,0
+Osage County,Kansas,3,0,0
+Neosho County,Kansas,1,0,0
+Morris County,Kansas,2,0,0
+Montgomery County,Kansas,6,0,0
+Mitchell County,Kansas,2,0,0
+McPherson County,Kansas,6,0,0
+Marion County,Kansas,1,0,0
+Lyon County,Kansas,17,0,0
+Linn County,Kansas,5,0,0
+Leavenworth County,Kansas,31,0,0
+Labette County,Kansas,1,0,0
+Johnson County,Kansas,171,0,0
+Jefferson County,Kansas,2,0,0
+Jackson County,Kansas,1,0,0
+Harvey County,Kansas,2,0,0
+Gove County,Kansas,1,0,0
+Franklin County,Kansas,9,0,0
+Ford County,Kansas,1,0,0
+Finney County,Kansas,4,0,0
+Douglas County,Kansas,31,0,0
+Doniphan County,Kansas,1,0,0
+Crawford County,Kansas,4,0,0
+Cowley County,Kansas,1,0,0
+Coffey County,Kansas,18,0,0
+Cloud County,Kansas,1,0,0
+Clay County,Kansas,1,0,0
+Cherokee County,Kansas,5,0,0
+Chautauqua County,Kansas,2,0,0
+Butler County,Kansas,7,0,0
+Bourbon County,Kansas,3,0,0
+Barton County,Kansas,3,0,0
+Atchison County,Kansas,1,0,0
 Acadia,Louisiana,72,1,0
 Allen,Louisiana,34,3,0
 Ascension,Louisiana,222,7,0
@@ -1407,6 +1497,68 @@ Torrance County,New Mexico,3,0,0
 Union County,New Mexico,0,0,0
 Valencia County,New Mexico,5,0,0
 Counties not identified,New Mexico,2,0,0
+Yates,New York,1,0,0
+Wyoming,New York,15,0,0
+Westchester,New York,12351,0,0
+Wayne,New York,30,0,0
+Washington,New York,15,0,0
+Warren,New York,19,0,0
+Ulster,New York,263,0,0
+Tompkins,New York,84,0,0
+Tioga,New York,7,0,0
+Sullivan,New York,168,0,0
+Suffolk,New York,10154,0,0
+Steuben,New York,46,0,0
+St. Lawrence,New York,43,0,0
+Seneca,New York,6,0,0
+Schuyler,New York,3,0,0
+Schoharie,New York,9,0,0
+Schenectady,New York,110,0,0
+Saratoga,New York,141,0,0
+Rockland,New York,4289,0,0
+Richmond,New York,3754,0,0
+Rensselaer,New York,56,0,0
+Queens,New York,18167,0,0
+Putnam,New York,252,0,0
+Otsego,New York,21,0,0
+Oswego,New York,26,0,0
+Orleans,New York,9,0,0
+Orange,New York,2397,0,0
+Ontario,New York,28,0,0
+Onondaga,New York,252,0,0
+Oneida,New York,71,0,0
+Niagara,New York,94,0,0
+Nassau,New York,12024,0,0
+Montgomery,New York,10,0,0
+Monroe,New York,464,0,0
+Manhattan,New York,8452,0,0
+Madison,New York,70,0,0
+Livingston,New York,16,0,0
+Lewis,New York,2,0,0
+Kings,New York,15700,0,0
+Jefferson,New York,18,0,0
+Herkimer,New York,14,0,0
+Hamilton,New York,2,0,0
+Greene,New York,23,0,0
+Genesee,New York,16,0,0
+Fulton,New York,6,0,0
+Franklin,New York,10,0,0
+Essex,New York,6,0,0
+Erie,New York,720,0,0
+Dutchess,New York,809,0,0
+Delaware,New York,24,0,0
+Cortland,New York,10,0,0
+Columbia,New York,42,0,0
+Clinton,New York,30,0,0
+Chenango,New York,32,0,0
+Chemung,New York,35,0,0
+Chautauqua,New York,9,0,0
+Cayuga,New York,6,0,0
+Cattaraugus,New York,9,0,0
+Broome,New York,56,0,0
+Bronx,New York,11086,0,0
+Allegany,New York,14,0,0
+Albany,New York,267,0,0
 Rockingham,North Carolina,3,1,0
 Guilford,North Carolina,79,3,0
 Alamance,North Carolina,14,0,0
