@@ -325,7 +325,6 @@ tableau:
   - New York: ''
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
-  - Kansas: ''
   - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
   - Ohio: 'https://public.tableau.com/views/OverviewDashboard_15852499073250/DashboardOverview_1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&iframeSizedToWindow=true&:loadOrderID=0'
 
