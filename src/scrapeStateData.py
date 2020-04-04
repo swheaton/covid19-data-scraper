@@ -23,7 +23,7 @@ def getOrDefault(config: object, attr: object, default: object) -> object:
     return retValue
 
 
-def getSiteContent(url):
+def getSiteContent(url, rawContent):
     # Doing this to look more like a browser so we won't get denied.
     header = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
@@ -33,7 +33,10 @@ def getSiteContent(url):
     content = None
     try:
         r = requests.get(url, headers=header)
-        content = r.content
+        if rawContent:
+            content = r.content
+        else:
+            content = r.text
     except requests.exceptions.SSLError:
         print('SSLError, trying to fake SSL context')
         context = ssl._create_unverified_context()
@@ -101,9 +104,10 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
     if footerRowsToSkip != 0:
         df = df[:-footerRowsToSkip]
 
-    # Zero-width space used by Pennsylvania...
     assert isinstance(df.columns.str, object)
+    # Some random unhelpful unicode characters
     df.columns = df.columns.str.replace('\u200b', '')
+    df.columns = df.columns.str.replace('\u0080', '')
 
     countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
     casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
@@ -174,9 +178,9 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
     if 'listIndexLookup' in scrapeParams:
         indexLookupParams = scrapeParams['listIndexLookup']
         values = dpath.util.get(jsonResult, indexLookupParams['casesValuesDpath'])
-        print(values)
+        print('values', values)
         indices = dpath.util.get(jsonResult, indexLookupParams['casesIndicesDpath'])
-        print(indices)
+        print('indices', indices)
 
         for countyInd in range(len(counties)):
             numCases = values[indices[countyInd]]
@@ -379,6 +383,8 @@ scrapeFuncs = {
     'text': scrapeText
 }
 
+needsRawContent = ['img', 'pdf', 'csv']
+
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)
     configs = yaml.safe_load(configFile)
@@ -412,10 +418,9 @@ with open('stateConfig.yml') as configFile:
             sleepAfterRender = getOrDefault(stateConfig['doJsRender'], 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
         elif 'doEstablishAndExtractSession' in stateConfig:
-            print('here??')
             pagecontent = doEstablishAndExtractSession(stateConfig['doEstablishAndExtractSession'], stateConfig['url'])
         else:
-            pagecontent = getSiteContent(stateConfig['url'])
+            pagecontent = getSiteContent(stateConfig['url'], stateConfig['type'] in needsRawContent)
 
         statedf = scrapeFuncs[scrapeType](stateConfig['scrapeParams'], state, pagecontent)
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})

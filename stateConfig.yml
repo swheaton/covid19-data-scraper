@@ -219,7 +219,7 @@ states:
     type: 'table'
     url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
     scrapeParams:
-      casesCol: 'Positive†'
+      casesCol: 'Positiveâ'
       deathsCol: 'Deaths*'
       footerRowsToSkip: 1
       tableIndex: 1
