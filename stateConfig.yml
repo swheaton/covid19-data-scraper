@@ -217,6 +217,12 @@ states:
       countyListDpath: 'features'
       countyDpath: 'attributes/NAME'
       casesDpath: 'attributes/totalCountyPosFin'
+  New Hampshire:
+    type: 'table'
+    url: 'https://www.nh.gov/covid19/'
+    scrapeParams:
+      tableIndex: 1
+      footerRowsToSkip: 1
   New Jersey:
     type: 'api-json'
     url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -364,9 +370,6 @@ labnotcounty:
 
 nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
-
-pdf:
-  New Hampshire: 'https://www.nh.gov/covid19/' # hard
 
 tableau:
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
