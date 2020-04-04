@@ -17,11 +17,11 @@ For any implemented method below, each state is completely configurable in [yaml
 - County-level page scraping
 
 ## Progress
-- 40 / 50 US states
+- 41 / 50 US states
   - :white_check_mark: Alabama
   - :white_check_mark: Alaska
   - :x: American Samoa
-  - :x: Arizona
+  - :white_check_mark: Arizona
   - :white_check_mark: Arkansas
   - :white_check_mark: California
   - :x: Colorado
