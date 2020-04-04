@@ -11,20 +11,21 @@ For any implemented method below, each state is completely configurable in [yaml
 - Scrape PDF for table data using [pdftotext](https://www.xpdfreader.com/pdftotext-man.html)
 - Scrape image for table data using [Pillow](https://pillow.readthedocs.io/en/stable/) for image manipulation and [pytesseract](https://pypi.org/project/pytesseract/) optical character recognition (OCR) functionality
 - Pre-rendering JavaScript on a page using [html-request](https://pypi.org/project/requests-html/)
+- Pre-establishing session id using [requests.Session](https://requests.readthedocs.io/en/master/), used for Tableau
+- Index-data lookup of 'post' json data, used for Tableau
 
 ## Proposed Methods for Remaining States
-- Tableau app
 - County-level page scraping
 
 ## Progress
-- 44 / 50 US states
+- 45 / 50 US states
   - :white_check_mark: Alabama
   - :white_check_mark: Alaska
   - :x: American Samoa
   - :white_check_mark: Arizona
   - :white_check_mark: Arkansas
   - :white_check_mark: California
-  - :x: Colorado
+  - :white_check_mark: Colorado
   - :white_check_mark: Connecticut
   - :white_check_mark: Delaware
   - :white_check_mark: District of Columbia

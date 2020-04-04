@@ -182,13 +182,15 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
         print(countyIndices)
 
         intvalues = dpath.util.get(jsonResult, indexLookupParams['casesValuesDpath'])
-        print('values', intvalues, intvalues.index(780))
+        print('values', intvalues)
         indices = dpath.util.get(jsonResult, indexLookupParams['casesIndicesDpath'])
         print('indices', indices)
 
         assert(len(indices) == len(countyIndices))
 
         for countyInd in range(len(countyIndices)):
+            if 'skipIndices' in indexLookupParams and countyInd in indexLookupParams['skipIndices']:
+                continue
             indexOfValue = indices[countyInd]
 
             if indexOfValue >= 0:

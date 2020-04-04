@@ -49,6 +49,25 @@ states:
       countyDpath: 'County Name'
       casesDpath: 'Total Count Confirmed'
       deathsDpath: 'Total Count Deaths'
+  Colorado:
+    type: 'api-json'
+    url: 'https://public.tableau.com/vizql/w/COVID19_CaseSummary/v/Textcasescounty/bootstrapSession/sessions/{{SESSION_ID}}'
+    doEstablishAndExtractSession:
+      sessionEstablishUrl: 'https://public.tableau.com/views/COVID19_CaseSummary/Textcasescounty?%3Aembed=y&%3AshowVizHome=no'
+      sessionIdHeader: 'x-session-id'
+      formData:
+        sheet_id: 'Text%20cases%20%28county%29'
+    scrapeParams:
+      countyListDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+      countyDpath: '/'
+      objSep: '\d+;'
+      listIndexLookup:
+        countyValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+        countyIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/Text cases (county)/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/1/aliasIndices'
+        casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
+        casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/Text cases (county)/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/2/aliasIndices'
+        skipIndices:
+          - 0
   Connecticut:
     type: 'pdf'
     url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
@@ -418,9 +437,6 @@ labnotcounty:
 
 nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
-
-tableau:
-  - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
 
 powerbi:
   - West Virginia: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
