@@ -32,7 +32,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: Georgia
   - :x: Guam
   - :x: Hawaii
-  - :x: Idaho
+  - :white_check_mark: Idaho
   - :white_check_mark: Illinois
   - :white_check_mark: Indiana
   - :white_check_mark: Iowa
@@ -74,7 +74,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :x: Vermont
   - :x: Virginia
   - :x: Washington
-  - :white_check_mark: West Virginia
+  - :x: West Virginia
   - :white_check_mark: Wisconsin
   - :white_check_mark: Wyoming
 - 1 / 9 districts, territories, and freely associated states

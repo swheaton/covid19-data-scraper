@@ -184,8 +184,15 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
         print(strvalues)
         countyIndices = dpath.util.get(jsonResult, indexLookupParams['countyIndicesDpath'])
         print(countyIndices)
+        assert(len(indices) == len(countyIndices))
+
         for countyInd in range(len(countyIndices)):
-            numCases = intvalues[indices[countyInd]]
+            indexOfValue = indices[countyInd]
+
+            if indexOfValue >= 0:
+                numCases = intvalues[indexOfValue]
+            else:
+                numCases = 0
             county = strvalues[countyIndices[countyInd]]
             df = df.append( {
                     'County' : county ,

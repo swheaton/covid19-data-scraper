@@ -80,6 +80,23 @@ states:
       headerRowsToSkip: 1
       casesCol: 'Total'
       footerRowsToSkip: 5
+  Idaho:
+    type: 'api-json'
+    url: 'https://public.tableau.com/vizql/w/DPHIdahoCOVID-19Dashboard_V2/v/DPHCOVID19Dashboard2/bootstrapSession/sessions/{{SESSION_ID}}'
+    doEstablishAndExtractSession:
+      sessionEstablishUrl: 'https://public.tableau.com/views/DPHIdahoCOVID-19Dashboard_V2/DPHCOVID19Dashboard2?%3Aembed=y&%3AshowVizHome=no'
+      sessionIdHeader: 'x-session-id'
+      formData:
+        sheet_id: 'DPH%20COVID19%20Dashboard%202'
+    scrapeParams:
+      countyListDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+      countyDpath: '/'
+      objSep: '\d+;'
+      listIndexLookup:
+        countyValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/2/dataValues'
+        countyIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Case Map/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/1/aliasIndices'
+        casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
+        casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Case Map/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/2/aliasIndices'
   Illinois:
     type: 'api-json'
     url: 'http://www.dph.illinois.gov/sitefiles/COVIDTestResults.json'
@@ -340,8 +357,6 @@ pdf:
   New Hampshire: 'https://www.nh.gov/covid19/' # hard
 
 tableau:
-  - Idaho: ''
-  - New York: ''
   - Arizona: 'https://tableau.azdhs.gov/views/UpdatedCOVIDdashboard/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Ftableau.azdhs.gov%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&:display_spinner=no&iframeSizedToWindow=true&:loadOrderID=0'
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
   - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
@@ -350,9 +365,6 @@ tableau:
 
 image:
   - Vermont: 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
-
-text:
-  - DC 'https://coronavirus.dc.gov/page/coronavirus-data'
 
 uncategorized:
   Puerto Rico 'https://estadisticas.pr/en/covid-19'
