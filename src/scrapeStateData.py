@@ -43,8 +43,12 @@ def getSiteContent(url):
 
 
 def mangleDateInUrl(dateInUrlConfig, url):
-    date = datetime.today()# - timedelta(days=1)
+    yesterday = getOrDefault(dateInUrlConfig, 'yesterday', False)
+    date = datetime.today()
+    if yesterday:
+        date = date - timedelta(days=1)
     zeroPad = getOrDefault(dateInUrlConfig, 'zeroPad', 'none')
+    outDate = ''
     if zeroPad == 'none':
         outDate = date.strftime(dateInUrlConfig['dateFormat'])
     elif zeroPad == 'first':
@@ -117,6 +121,8 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
         df['Cases'] = df['Cases'].str.replace('\u200b', '')
         df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', '1'))
         df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
+    else:
+        df['Cases'].fillna(0, inplace=True)
 
     print(df)
     # Remove all extraneous columns
@@ -385,18 +391,16 @@ with open('stateConfig.yml') as configFile:
         if 'dateInUrl' in stateConfig:
             stateConfig['url'] = mangleDateInUrl(stateConfig['dateInUrl'], stateConfig['url'])
 
-        shouldDoJsRender = getOrDefault(stateConfig, 'doJsRender', False)
-        shouldDoEstablishAndExtractSession = getOrDefault(stateConfig, 'doEstablishAndExtractSession', False)
-        if shouldDoJsRender:
-            sleepAfterRender = getOrDefault(stateConfig, 'sleepAfterRender', 5)
+        if 'doJsRender' in stateConfig:
+            sleepAfterRender = getOrDefault(stateConfig['doJsRender'], 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
-        elif shouldDoEstablishAndExtractSession:
+        elif 'establishAndExtractSession' in stateConfig:
             print('here??')
             pagecontent = doEstablishAndExtractSession(stateConfig)
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        statedf = scrapeFuncs[scrapeType](stateConfig, state, pagecontent)
+        statedf = scrapeFuncs[type](stateConfig['scrapeParams'], state, pagecontent)
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 

@@ -27,7 +27,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :x: Colorado
   - :white_check_mark: Connecticut
   - :white_check_mark: Delaware
-  - :x: District of Columbia
+  - :white_check_mark: District of Columbia
   - :white_check_mark: Florida
   - :white_check_mark: Georgia
   - :x: Guam
@@ -77,7 +77,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: West Virginia
   - :white_check_mark: Wisconsin
   - :white_check_mark: Wyoming
-- 0 / 9 districts, territories, and freely associated states
+- 1 / 9 districts, territories, and freely associated states
 
 ## Noteable Python Modules Used
 - pandas

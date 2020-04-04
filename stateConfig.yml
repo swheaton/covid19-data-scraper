@@ -3,85 +3,109 @@ states:
   Alabama:
     type: 'api-json'
     url: 'https://services7.arcgis.com/4RQmZZ0yaZkGR1zy/arcgis/rest/services/COV19_Public_Dashboard_ReadOnly/FeatureServer/0/query?f=json&where=CNTYNAME%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/CNTYNAME'
-    casesDpath: 'attributes/CONFIRMED'
-    deathsDpath: 'attributes/DIED'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/CNTYNAME'
+      casesDpath: 'attributes/CONFIRMED'
+      deathsDpath: 'attributes/DIED'
   Alaska:
     type: 'api-json'
     url: 'https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/COVID_Cases_public/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&groupByFieldsForStatistics=County&orderByFields=County%20asc&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22County%22%2C%22outStatisticFieldName%22%3A%22Cases%22%7D%5D&cacheHint=true'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/County'
-    casesDpath: 'attributes/Cases'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/County'
+      casesDpath: 'attributes/Cases'
   Arkansas:
     type: 'api-json'
     url: 'https://services.arcgis.com/PwY9ZuZRDiI5nXUB/ArcGIS/rest/services/ADH_COVID19_Positive_Test_Results/FeatureServer/0/query?f=json&where=county_nam%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/county_nam'
-    casesDpath: 'attributes/positive'
-    deathsDpath: 'attributes/deaths'
-    recoveredDpath: 'attributes/Recoveries'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/county_nam'
+      casesDpath: 'attributes/positive'
+      deathsDpath: 'attributes/deaths'
+      recoveredDpath: 'attributes/Recoveries'
   Connecticut:
     type: 'pdf'
     url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
     dateInUrl:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
-    pageOfTable: 11
-    countyCol: 'Town'
-    sentinel: '*Data are preliminary and subject to change*'
+    scrapeParams:
+      pageOfTable: 11
+      countyCol: 'Town'
+      sentinel: '*Data are preliminary and subject to change*'
   Delaware:
     type: 'api-json'
     url: 'https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_Time_VIEW/FeatureServer/0/query?f=json&where=NAME%3C%3E%27Statewide%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/NAME'
-    casesDpath: 'attributes/Presumptive_Positive'
-    deathsDpath: 'attributes/Total_Death'
-    recoveredDpath: 'attributes/Recovered'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/NAME'
+      casesDpath: 'attributes/Presumptive_Positive'
+      deathsDpath: 'attributes/Total_Death'
+      recoveredDpath: 'attributes/Recovered'
+  District of Columbia:
+    type: 'table'
+    url: 'https://coronavirus.dc.gov/release/coronavirus-data-{{INSERT_DATE}}'
+    dateInUrl:
+      dateFormat: '%B-%d-%Y'
+      yesterday: true
+      zeroPad: 'all'
+      toLower: true
+    scrapeParams:
+      tableIndex: 1
+      countyCol: 'Ward'
+      casesCol: 'Total Positive Cases'
+
   Florida:
     type: 'api-json'
     url: 'https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_Testing/FeatureServer/0/query?f=json&where=County_1%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/County_1'
-    casesDpath: 'attributes/CasesAll'
-    deathsDpath: 'attributes/Deaths'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/County_1'
+      casesDpath: 'attributes/CasesAll'
+      deathsDpath: 'attributes/Deaths'
   Georgia:
     type: 'table'
     url: 'https://d20s4vd27d0hk0.cloudfront.net/?initialWidth=746&childId=covid19dashdph&parentTitle=COVID-19%20Daily%20Status%20Report%20%7C%20Georgia%20Department%20of%20Public%20Health&parentUrl=https%3A%2F%2Fdph.georgia.gov%2Fcovid-19-daily-status-report'
-    tableIndex: 5
-    casesCol: 'No. Cases'
-    deathsCol: 'No. Deaths'
-    countyCol: 'COVID-19 Confirmed Cases By County:'
-    footerRowsToSkip: 1
+    scrapeParams:
+      tableIndex: 5
+      casesCol: 'No. Cases'
+      deathsCol: 'No. Deaths'
+      countyCol: 'COVID-19 Confirmed Cases By County:'
+      footerRowsToSkip: 1
   Hawaii:
     type: 'skiptable'
     url: 'https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/'
-    headerRowsToSkip: 1
-    casesCol: 'Total'
-    footerRowsToSkip: 5
+    scrapeParams:
+      headerRowsToSkip: 1
+      casesCol: 'Total'
+      footerRowsToSkip: 5
   Illinois:
     type: 'api-json'
     url: 'http://www.dph.illinois.gov/sitefiles/COVIDTestResults.json'
-    countyListDpath: 'characteristics_by_county/values'
-    ignoreStateAsCounty: true
-    countyDpath: 'County'
-    casesDpath: 'confirmed_cases'
-    deathsDpath: 'deaths'
+    scrapeParams:
+      countyListDpath: 'characteristics_by_county/values'
+      ignoreStateAsCounty: true
+      countyDpath: 'County'
+      casesDpath: 'confirmed_cases'
+      deathsDpath: 'deaths'
   Indiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/f2aRfVsQG7TInso2/arcgis/rest/services/County_COVID19/FeatureServer/0/query?f=json&where=COUNTYNAME%3C%3E%27%27&returnGeometry=false&outfields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/COUNTYNAME'
-    casesDpath: 'attributes/Total_Positive'
-    deathsDpath: 'attributes/Total_Deaths'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/COUNTYNAME'
+      casesDpath: 'attributes/Total_Positive'
+      deathsDpath: 'attributes/Total_Deaths'
   Iowa:
     type: 'api-json'
     url: 'https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IA_COVID19_Cases/FeatureServer/0/query?f=json&where=Name%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/Name'
-    casesDpath: 'attributes/Confirmed'
-    deathsDpath: 'attributes/Deaths'
-    recoveredDpath: 'attributes/Recovered'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/Name'
+      casesDpath: 'attributes/Confirmed'
+      deathsDpath: 'attributes/Deaths'
+      recoveredDpath: 'attributes/Recovered'
   Kansas:
     type: 'api-json'
     url: 'https://public.tableau.com/vizql/w/COVID-19Data_15851817634470/v/CountyCounts/bootstrapSession/sessions/{{SESSION_ID}}'
@@ -97,170 +121,190 @@ states:
   Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/Parish'
-    casesDpath: 'attributes/Cases'
-    deathsDpath: 'attributes/Deaths'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/Parish'
+      casesDpath: 'attributes/Cases'
+      deathsDpath: 'attributes/Deaths'
   Maine:
     type: 'table'
-    countyCol: 'County1'
     url: 'https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml'
-    tableIndex: 1
-    headerRowsToSkip: 2
-    casesCol: 'Confirmed'
+    scrapeParams:
+      countyCol: 'County1'
+      tableIndex: 1
+      headerRowsToSkip: 2
+      casesCol: 'Confirmed'
   Maryland:
     type: 'api-json'
     url: 'https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_Case_Counts_by_County/FeatureServer/0/query?f=json&where=COUNTY%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/COUNTY'
-    casesDpath: 'attributes/TotalCaseCount'
-    deathsDpath: 'attributes/TotalDeathCount'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/COUNTY'
+      casesDpath: 'attributes/TotalCaseCount'
+      deathsDpath: 'attributes/TotalDeathCount'
   Massachusetts:
     type: 'pdf'
     url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
-    dateInUrlFormat:
+    dateInUrl:
       dateFormat: '%B-%d-%Y'
       zeroPad: 'all'
       toLower: true
-    pageOfTable: 1
-    casesCol: ''
-    sentinel: 'Sex'
+    scrapeParams:
+      pageOfTable: 1
+      casesCol: ''
+      sentinel: 'Sex'
   Michigan:
     type: 'table'
     url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
-    footerRowsToSkip: 1
+    scrapeParams:
+      deathsCol: 'Reported Deaths'
+      footerRowsToSkip: 1
   Minnesota:
     type: 'table'
     url: 'https://www.health.state.mn.us/diseases/coronavirus/situation.html'
-    tableIndex: 2
+    scrapeParams:
+      tableIndex: 2
   Mississippi:
     type: 'table'
     url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
-    footerRowsToSkip: 1
+    scrapeParams:
+      footerRowsTo Skip: 1
   Missouri:
     type: 'table'
     url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
-    casesCol: 'Total'
+    scrapeParams:
+      casesCol: 'Total'
   Montana:
     type: 'api-json'
     url: 'https://services.arcgis.com/qnjIrwR8z5Izc0ij/arcgis/rest/services/PUBLIC_VIEW_COVID19_CASES/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/NAMELABEL'
-    casesDpath: 'attributes/Total'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/NAMELABEL'
+      casesDpath: 'attributes/Total'
   New Jersey:
     type: 'api-json'
     url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/COUNTY_LAB'
-    casesDpath: 'attributes/TOTAL_CASES'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/COUNTY_LAB'
+      casesDpath: 'attributes/TOTAL_CASES'
   New Mexico:
     type: 'table'
     url: 'https://cv.nmhealth.org/cases-by-county/'
+    scrapeParams: {}
   North Carolina:
     type: 'api-json'
     url: 'https://services.arcgis.com/iFBq2AW9XO0jYYF7/arcgis/rest/services/NCCovid19/FeatureServer/0/query?f=json&where=county%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/County'
-    casesDpath: 'attributes/Total'
-    deathsDpath: 'attributes/Deaths'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/County'
+      casesDpath: 'attributes/Total'
+      deathsDpath: 'attributes/Deaths'
   North Dakota:
-    type: 'img'
-    url: 'https://www.health.nd.gov/sites/www/files/documents/Files/MSS/img/Overall_County_ND_99.png'
-    imgLeftPx: 28
-    imgUpperPx: 108
-    imgLowerPx: 440
-    imgRightPx: 184
+    type: 'table'
+    url: 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+    scrapeParams:
+      casesCol: 'Positive  Cases'
   Oklahoma:
     type: 'table'
     url: 'https://coronavirus.health.ok.gov'
-    footerRowsToSkip: 1
-    casesCol: 'COVID-19 Cases by County*'
-    tableIndex: 4
+    scrapeParams:
+      footerRowsToSkip: 1
+      casesCol: 'COVID-19 Cases by County*'
+      tableIndex: 4
   Oregon:
     type: 'table'
     url: 'https://govstatus.egov.com/OR-OHA-COVID-19'
-    casesCol: 'Positive†'
-    deathsCol: 'Deaths*'
-    footerRowsToSkip: 1
-    tableIndex: 1
+    scrapeParams:
+      casesCol: 'Positive†'
+      deathsCol: 'Deaths*'
+      footerRowsToSkip: 1
+      tableIndex: 1
   Pennsylvania:
     type: 'table'
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
-    casesCol: 'Number of Cases'
-    tableIndex: 3
+    scrapeParams:
+      casesCol: 'Number of Cases'
+      tableIndex: 3
   Rhode Island:
     type: 'table'
     url: 'https://health.ri.gov/data/covid-19/'
-    casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
-    countyCol: 'City/Town'
-    doJsRender: true
-    tableIndex: 8
-    sleepAfterRender: 10
-    replaceLess5: '1'
+    doJsRender:
+      sleepAfterRender: 10
+    scrapeParams:
+      casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
+      countyCol: 'City/Town'
+      tableIndex: 8
+      replaceLess5: '1'
   South Carolina:
     type: 'api-json'
     url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/Covid19_Cases_Centroid_SharingView/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/NAME'
-    casesDpath: 'attributes/Confirmed'
-    deathsDpath: 'attributes/Death'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/NAME'
+      casesDpath: 'attributes/Confirmed'
+      deathsDpath: 'attributes/Death'
   South Dakota:
     type: 'table'
     url: 'https://doh.sd.gov/news/Coronavirus.aspx'
-    tableIndex: 2
-    casesCol: 'Total Positive Cases'
-    recoveredCol: '# Recovered'
-    footerRowsToSkip: 1
+    scrapeParams:
+      tableIndex: 2
+      casesCol: 'Total Positive Cases'
+      recoveredCol: '# Recovered'
+      footerRowsToSkip: 1
   Tennessee:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
-    casesCol: 'positives'
-    countyCol: 'Unnamed: 0'
-    deathsCol: 'deaths'
-    tableIndex: 5
-    footerRowsToSkip: 1
+    scrapeParams:
+      casesCol: 'positives'
+      countyCol: 'Unnamed: 0'
+      deathsCol: 'deaths'
+      tableIndex: 5
+      footerRowsToSkip: 1
   Texas:
     type: 'api-json'
     url: 'https://services5.arcgis.com/ACaLB9ifngzawspq/arcgis/rest/services/COVID19County_ViewLayer/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&outFields=*'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/County'
-    casesDpath: 'attributes/Count_'
-    deathsDpath: 'attributes/Deaths'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/County'
+      casesDpath: 'attributes/Count_'
+      deathsDpath: 'attributes/Deaths'
   Utah:
     type: 'table' # can get script app data?? instead of js render
     url: 'https://coronavirus-dashboard.utah.gov/'
-    doJsRender: true
-    sleepAfterRender: 10
-    countyCol: 'Jurisdiction'
-    footerRowsToSkip: 1
+    doJsRender:
+      sleepAfterRender: 10
+    scrapeParams:
+      countyCol: 'Jurisdiction'
+      footerRowsToSkip: 1
   Washington:
     type: 'post'
     url: 'https://www.doh.wa.gov/Emergencies/Coronavirus'
-    doJsRender: true
-    sleepAfterRender: 10
-    tableIndex: 4
-    casesCol: 'Positive/Confirmed Cases'
-    footerRowsToSkip: 1
+    doJsRender:
+      sleepAfterRender: 10
+    scrapeParams:
+      tableIndex: 4
+      casesCol: 'Positive/Confirmed Cases'
+      footerRowsToSkip: 1
   West Virginia:
     type: 'post'
     url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
-    dataXpath: '//*[@id="column"]/div/div[6]/p[1]'
-    startDelim: 'Counties with positive cases: '
-    sentinel: '</p>'
   Wisconsin:
     type: 'api-json'
     url: 'https://services1.arcgis.com/ISZ89Z51ft1G16OK/arcgis/rest/services/COVID19_WI/FeatureServer/0/query?f=json&where=1%3D1&outFields=*&returnQueryGeometry=false'
-    countyListDpath: 'features'
-    countyDpath: 'attributes/NAME'
-    casesDpath: 'attributes/POSITIVE'
-    deathsDpath: 'attributes/DEATHS'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/NAME'
+      casesDpath: 'attributes/POSITIVE'
+      deathsDpath: 'attributes/DEATHS'
   Wyoming:
     type: 'text'
     url: 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
-    dataXpath: '//*[@id="et-boc"]/div/div/div/div[4]/div[2]/div/div/p'
-    startDelim: 'Cases by County</strong><br>'
-    sentinel: '</p>'
-    eltDelim: '<br>'
+    scrapeParams:
+      dataXpath: '//*[@id="et-boc"]/div/div/div/div[4]/div[2]/div/div/p'
+      startDelim: 'Cases by County</strong><br>'
+      sentinel: '</p>'
+      eltDelim: '<br>'
 
 labnotcounty:
   - Nevada 'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9'
