@@ -24,6 +24,14 @@ states:
       casesDpath: 'attributes/positive'
       deathsDpath: 'attributes/deaths'
       recoveredDpath: 'attributes/Recoveries'
+  California:
+    type: 'api-json'
+    url: 'https://data.chhs.ca.gov/api/3/action/datastore_search?resource_id=cd7ff27d-ac5d-419d-b850-5f6098dbfccc&limit=5000'
+    scrapeParams:
+      countyListDpath: 'result/records'
+      countyDpath: 'County Name'
+      casesDpath: 'Total Count Confirmed'
+      deathsDpath: 'Total Count Deaths'
   Connecticut:
     type: 'pdf'
     url: 'https://portal.ct.gov/-/media/Coronavirus/CTDPHCOVID19summary{{INSERT_DATE}}.pdf?la=en'
@@ -55,7 +63,6 @@ states:
       tableIndex: 1
       countyCol: 'Ward'
       casesCol: 'Total Positive Cases'
-
   Florida:
     type: 'api-json'
     url: 'https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_Testing/FeatureServer/0/query?f=json&where=County_1%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -203,6 +210,13 @@ states:
       countyListDpath: 'features'
       countyDpath: 'attributes/NAMELABEL'
       casesDpath: 'attributes/Total'
+  Nebraska:
+    type: 'api-json'
+    url: 'https://gis.ne.gov/Agency/rest/services/COVID19_County_Layer/MapServer/0/query?f=json&where=1%3D1&returnGeometry=false&outFields=*'
+    scrapeParams:
+      countyListDpath: 'features'
+      countyDpath: 'attributes/NAME'
+      casesDpath: 'attributes/totalCountyPosFin'
   New Jersey:
     type: 'api-json'
     url: 'https://services7.arcgis.com/Z0rixLlManVefxqY/arcgis/rest/services/DailyCaseCounts/FeatureServer/0/query?f=json&where=COUNTY_LAB%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -349,8 +363,6 @@ labnotcounty:
   - Nevada 'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9'
 
 nocountyinfo:
-  - California 'cdph.ca.gov/covid19'
-  - Nebraska http://dhhs.ne.gov/Pages/Coronavirus.aspx#SectionLink3
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 pdf:

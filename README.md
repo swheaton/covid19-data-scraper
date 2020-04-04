@@ -17,13 +17,13 @@ For any implemented method below, each state is completely configurable in [yaml
 - County-level page scraping
 
 ## Progress
-- 38 / 50 US states
+- 39 / 50 US states
   - :white_check_mark: Alabama
   - :white_check_mark: Alaska
   - :x: American Samoa
   - :x: Arizona
   - :white_check_mark: Arkansas
-  - :x: California
+  - :white_check_mark: California
   - :x: Colorado
   - :white_check_mark: Connecticut
   - :white_check_mark: Delaware
@@ -49,7 +49,7 @@ For any implemented method below, each state is completely configurable in [yaml
   - :white_check_mark: Mississippi
   - :white_check_mark: Missouri
   - :white_check_mark: Montana
-  - :x: Nebraska
+  - :white_check_mark: Nebraska
   - :x: Nevada
   - :x: New Hampshire
   - :white_check_mark: New Jersey
