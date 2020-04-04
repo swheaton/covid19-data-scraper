@@ -354,17 +354,14 @@ states:
       countyCol: 'Jurisdiction'
       footerRowsToSkip: 1
   Washington:
-    type: 'post'
+    type: 'table'
     url: 'https://www.doh.wa.gov/Emergencies/Coronavirus'
     doJsRender:
       sleepAfterRender: 10
     scrapeParams:
       tableIndex: 4
-      casesCol: 'Positive/Confirmed Cases'
+      casesCol: 'Confirmed Cases'
       footerRowsToSkip: 1
-  West Virginia:
-    type: 'post'
-    url: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
   Wisconsin:
     type: 'api-json'
     url: 'https://services1.arcgis.com/ISZ89Z51ft1G16OK/arcgis/rest/services/COVID19_WI/FeatureServer/0/query?f=json&where=1%3D1&outFields=*&returnQueryGeometry=false'
@@ -393,6 +390,8 @@ tableau:
   - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
   - Ohio: 'https://public.tableau.com/views/OverviewDashboard_15852499073250/DashboardOverview_1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&iframeSizedToWindow=true&:loadOrderID=0'
 
+powerbi:
+  - West Virginia: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
 
 image:
   - Vermont: 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
