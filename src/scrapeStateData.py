@@ -77,27 +77,27 @@ def doJsRender(url, tosleep):
     return content
 
 
-def doEstablishAndExtractSession(stateConfig):
-    sessionEstablishUrl = stateConfig['sessionEstablishUrl']
+def doEstablishAndExtractSession(extractSessionConfig, url):
+    sessionEstablishUrl = extractSessionConfig['sessionEstablishUrl']
     with requests.Session() as session:
         response = session.get(sessionEstablishUrl)
-        sessionId = response.headers[stateConfig['sessionIdHeader']]
-        url = stateConfig['url'].replace('{{SESSION_ID}}', sessionId)
-        print(stateConfig['formData'])
+        sessionId = response.headers[extractSessionConfig['sessionIdHeader']]
+        url = url.replace('{{SESSION_ID}}', sessionId)
+        print(extractSessionConfig['formData'])
         print(url)
-        response2 = session.post(url, data=stateConfig['formData'])
+        response2 = session.post(url, data=extractSessionConfig['formData'])
         return response2.text
 
 
-def scrapeHtmlTable(stateConfig, state, pagecontent):
+def scrapeHtmlTable(scrapeParams, state, pagecontent):
     html = pagecontent
 
-    tableIndex = getOrDefault(stateConfig, 'tableIndex', 0)
-    headerRowsToSkip = getOrDefault(stateConfig, 'headerRowsToSkip', 0)
+    tableIndex = getOrDefault(scrapeParams, 'tableIndex', 0)
+    headerRowsToSkip = getOrDefault(scrapeParams, 'headerRowsToSkip', 0)
     df = pd.read_html(html, skiprows=headerRowsToSkip, header=0)[tableIndex]
 
     # Drop last (total col) if needed
-    footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
+    footerRowsToSkip = getOrDefault(scrapeParams, 'footerRowsToSkip', 0)
     if footerRowsToSkip != 0:
         df = df[:-footerRowsToSkip]
 
@@ -105,10 +105,10 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     assert isinstance(df.columns.str, object)
     df.columns = df.columns.str.replace('\u200b', '')
 
-    countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
-    casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
-    deathsCol = getOrDefault(stateConfig, 'deathsCol', 'Deaths')
-    recoveredCol = getOrDefault(stateConfig, 'recoveredCol', 'Recovered')
+    countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
+    casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
+    deathsCol = getOrDefault(scrapeParams, 'deathsCol', 'Deaths')
+    recoveredCol = getOrDefault(scrapeParams, 'recoveredCol', 'Recovered')
     columnRename = dict(zip((countyCol, casesCol, deathsCol, recoveredCol), ('County', 'Cases', 'Deaths', 'Recovered')))
     df.rename(columns=columnRename, inplace=True)
 
@@ -119,7 +119,7 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     #   And also zero-width space first...
     if df['Cases'].dtype == np.object:
         df['Cases'] = df['Cases'].str.replace('\u200b', '')
-        df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', '1'))
+        df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(scrapeParams, 'replaceLess5', '1'))
         df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
     else:
         df['Cases'].fillna(0, inplace=True)
@@ -157,28 +157,45 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
     return df
 
 
-def scrapeApiJson(stateConfig, state, pagecontent):
+def scrapeApiJson(scrapeParams, state, pagecontent):
     df = pd.DataFrame()
+
+    if 'objSep' in scrapeParams:
+        pagecontentlist = re.split(scrapeParams['objSep'], str(pagecontent))
+        pagecontentlist = [pc for pc in pagecontentlist if pc != '']
+        pagecontent = '[' + ','.join(pagecontentlist) + ']'
 
     with open('blah.out', 'w') as b:
         b.write(str(pagecontent))
 
     jsonResult = json.loads(str(pagecontent))
-    print(jsonResult, indent=4)
-    return df
 
-    if getOrDefault(stateConfig, 'listIndexLookup', False):
-        dpath.util.get(jsonResult)
-        pass
+    counties = dpath.util.get(jsonResult, scrapeParams['countyListDpath'])
+    if 'listIndexLookup' in scrapeParams:
+        indexLookupParams = scrapeParams['listIndexLookup']
+        values = dpath.util.get(jsonResult, indexLookupParams['casesValuesDpath'])
+        print(values)
+        indices = dpath.util.get(jsonResult, indexLookupParams['casesIndicesDpath'])
+        print(indices)
+
+        for countyInd in range(len(counties)):
+            numCases = values[indices[countyInd]]
+            county = counties[countyInd]
+            df = df.append( {
+                    'County' : county ,
+                    'State' : state,
+                    'Cases': numCases or 0,
+                    'Deaths': 0,
+                    'Recovered': 0} , ignore_index=True)
     else:
-        for countyJson in dpath.util.get(jsonResult, stateConfig['countyListDpath']):
-            county = dpath.util.get(countyJson, stateConfig['countyDpath'])
+        for countyJson in counties:
+            county = dpath.util.get(countyJson, scrapeParams['countyDpath'])
 
-            if getOrDefault(stateConfig, 'ignoreStateAsCounty', False) and county == state:
+            if getOrDefault(scrapeParams, 'ignoreStateAsCounty', False) and county == state:
                 continue
-            numCases = dpath.util.get(countyJson, stateConfig['casesDpath'])
-            numDeaths = dpath.util.get(countyJson, stateConfig['deathsDpath']) if 'deathsDpath' in stateConfig else 0
-            numRecovered = dpath.util.get(countyJson, stateConfig['recoveredDpath']) if 'recoveredDpath' in stateConfig else 0
+            numCases = dpath.util.get(countyJson, scrapeParams['casesDpath'])
+            numDeaths = dpath.util.get(countyJson, scrapeParams['deathsDpath']) if 'deathsDpath' in scrapeParams else 0
+            numRecovered = dpath.util.get(countyJson, scrapeParams['recoveredDpath']) if 'recoveredDpath' in scrapeParams else 0
             df = df.append( {
                     'County' : county ,
                     'State' : state,
@@ -189,23 +206,23 @@ def scrapeApiJson(stateConfig, state, pagecontent):
     return df
 
 
-def scrapeText(stateConfig, state, pagecontent):
+def scrapeText(scrapeParams, state, pagecontent):
     tree = htmlparse.fromstring(pagecontent)
-    subtree = tree.xpath(stateConfig['dataXpath'])
+    subtree = tree.xpath(scrapeParams['dataXpath'])
     dataString = str(htmlparse.tostring(subtree[0]))
 
     startIndex = 0
-    if 'startDelim' in stateConfig:
-        startDelim = stateConfig['startDelim']
+    if 'startDelim' in scrapeParams:
+        startDelim = scrapeParams['startDelim']
         startIndex = dataString.find(startDelim) + len(startDelim)
-    elif 'firstCounty' in stateConfig:
-        startIndex = dataString.find(stateConfig['firstCounty'])
+    elif 'firstCounty' in scrapeParams:
+        startIndex = dataString.find(scrapeParams['firstCounty'])
     else:
         print("ERROR: did you mean to not have a start delim or first county?")
-    sentinel = stateConfig['sentinel']
+    sentinel = scrapeParams['sentinel']
 
     dataString = dataString[startIndex : dataString.find(sentinel)]
-    dataList = dataString.split(getOrDefault(stateConfig, 'eltDelim', ','))
+    dataList = dataString.split(getOrDefault(scrapeParams, 'eltDelim', ','))
 
     df = pd.DataFrame()
     for countyDatum in dataList:
@@ -213,7 +230,7 @@ def scrapeText(stateConfig, state, pagecontent):
         countyDatum = re.sub(r'<[^>]+>', '', countyDatum)
 
         dataTuple = countyDatum.split()
-        newInParen = getOrDefault(stateConfig, 'newInParen', False)
+        newInParen = getOrDefault(scrapeParams, 'newInParen', False)
         caseIndex = 1
         if newInParen:
             caseIndex = 2
@@ -230,11 +247,11 @@ def scrapeText(stateConfig, state, pagecontent):
     return df
 
 
-def scrapeCsv(stateConfig, state, pagecontent):
-    footerRowsToSkip = getOrDefault(stateConfig, 'footerRowsToSkip', 0)
+def scrapeCsv(scrapeParams, state, pagecontent):
+    footerRowsToSkip = getOrDefault(scrapeParams, 'footerRowsToSkip', 0)
     df = pd.read_csv(StringIO(pagecontent), skipfooter=footerRowsToSkip)
-    countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
-    casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
+    countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
+    casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
     df.rename(columns=columnRename, inplace=True)
     df['Deaths'] = 0
@@ -243,7 +260,7 @@ def scrapeCsv(stateConfig, state, pagecontent):
     return df
 
 
-def scrapePdf(stateConfig, state, pagecontent):
+def scrapePdf(scrapeParams, state, pagecontent):
     with open('_tmp/tmp.pdf', 'wb') as pdfFile:
         pdfFile.write(pagecontent)
     try:
@@ -252,16 +269,16 @@ def scrapePdf(stateConfig, state, pagecontent):
         pass
 
     pageOfTable = ''
-    if 'pageOfTable' in stateConfig:
-        pageOfTable = '-f ' + str(stateConfig['pageOfTable']) + ' -l ' + str(stateConfig['pageOfTable'])
+    if 'pageOfTable' in scrapeParams:
+        pageOfTable = '-f ' + str(scrapeParams['pageOfTable']) + ' -l ' + str(scrapeParams['pageOfTable'])
     os.system('pdftotext ' + pageOfTable +' -layout _tmp/tmp.pdf')
     df = pd.DataFrame()
 
     with open('_tmp/tmp.txt', 'r', encoding = "ISO-8859-1") as txtFile:
         lines = txtFile.readlines()
         recording = False
-        countyCol = getOrDefault(stateConfig, 'countyCol', 'County')
-        casesCol = getOrDefault(stateConfig, 'casesCol', 'Cases')
+        countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
+        casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
 
         headerMatcher = re.compile('\s*'+countyCol+'\s*'+casesCol)
         for line in lines:
@@ -270,7 +287,7 @@ def scrapePdf(stateConfig, state, pagecontent):
                 continue
 
             if recording:
-                if line.lstrip().startswith(stateConfig['sentinel']):
+                if line.lstrip().startswith(scrapeParams['sentinel']):
                     break
                 tokens = line.split()
                 tokens = [token.replace('*','') for token in tokens]
@@ -300,16 +317,16 @@ def scrapePdf(stateConfig, state, pagecontent):
     return df
 
 
-def scrapeImage(stateConfig, state, pagecontent):
+def scrapeImage(scrapeParams, state, pagecontent):
     df = pd.DataFrame()
     # Save the image
-    imgSuffix = stateConfig['url'][stateConfig['url'].rindex('.'):]
+    imgSuffix = scrapeParams['url'][scrapeParams['url'].rindex('.'):]
     with open('_tmp/tmp' + imgSuffix, 'wb') as imgFile:
         imgFile.write(pagecontent)
 
 
     with Image.open('_tmp/tmp' + imgSuffix) as img:
-        img = img.crop((stateConfig['imgLeftPx'], stateConfig['imgUpperPx'], stateConfig['imgRightPx'], stateConfig['imgLowerPx']))
+        img = img.crop((scrapeParams['imgLeftPx'], scrapeParams['imgUpperPx'], scrapeParams['imgRightPx'], scrapeParams['imgLowerPx']))
         #img.show()
         img.save('_tmp/tmp2' + imgSuffix)
 
@@ -394,13 +411,13 @@ with open('stateConfig.yml') as configFile:
         if 'doJsRender' in stateConfig:
             sleepAfterRender = getOrDefault(stateConfig['doJsRender'], 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
-        elif 'establishAndExtractSession' in stateConfig:
+        elif 'doEstablishAndExtractSession' in stateConfig:
             print('here??')
-            pagecontent = doEstablishAndExtractSession(stateConfig)
+            pagecontent = doEstablishAndExtractSession(stateConfig['doEstablishAndExtractSession'], stateConfig['url'])
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        statedf = scrapeFuncs[type](stateConfig['scrapeParams'], state, pagecontent)
+        statedf = scrapeFuncs[scrapeType](stateConfig['scrapeParams'], state, pagecontent)
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 

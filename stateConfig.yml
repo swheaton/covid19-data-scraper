@@ -109,15 +109,18 @@ states:
   Kansas:
     type: 'api-json'
     url: 'https://public.tableau.com/vizql/w/COVID-19Data_15851817634470/v/CountyCounts/bootstrapSession/sessions/{{SESSION_ID}}'
-    doEstablishAndExtractSession: true
-    sessionEstablishUrl: 'https://public.tableau.com/views/COVID-19Data_15851817634470/CountyCounts?%3AshowVizHome=no'
-    sessionIdHeader: 'x-session-id'
-    formData:
-      sheet_id: 'County%20Counts'
-    listIndexLookup: true
-    countyListDpath: ''
-    casesValueDpath: ''
-    casesIndexDpath: ''
+    doEstablishAndExtractSession:
+      sessionEstablishUrl: 'https://public.tableau.com/views/COVID-19Data_15851817634470/CountyCounts?%3AshowVizHome=no'
+      sessionIdHeader: 'x-session-id'
+      formData:
+        sheet_id: 'County%20Counts'
+    scrapeParams:
+      countyListDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+      countyDpath: '/'
+      objSep: '\d+;'
+      listIndexLookup:
+        casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
+        casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Counts/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/1/aliasIndices'
   Louisiana:
     type: 'api-json'
     url: 'https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/Cases_by_Parish_2/FeatureServer/0/query?f=json&where=PFIPS%20%3C%3E%2099999&returnGeometry=false&outFields=*'
