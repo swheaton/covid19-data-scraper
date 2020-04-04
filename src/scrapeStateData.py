@@ -174,17 +174,19 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
 
     jsonResult = json.loads(str(pagecontent))
 
-    counties = dpath.util.get(jsonResult, scrapeParams['countyListDpath'])
     if 'listIndexLookup' in scrapeParams:
         indexLookupParams = scrapeParams['listIndexLookup']
-        values = dpath.util.get(jsonResult, indexLookupParams['casesValuesDpath'])
-        print('values', values)
+        intvalues = dpath.util.get(jsonResult, indexLookupParams['casesValuesDpath'])
+        print('values', intvalues)
         indices = dpath.util.get(jsonResult, indexLookupParams['casesIndicesDpath'])
         print('indices', indices)
-
-        for countyInd in range(len(counties)):
-            numCases = values[indices[countyInd]]
-            county = counties[countyInd]
+        strvalues = dpath.util.get(jsonResult, indexLookupParams['countyValuesDpath'])
+        print(strvalues)
+        countyIndices = dpath.util.get(jsonResult, indexLookupParams['countyIndicesDpath'])
+        print(countyIndices)
+        for countyInd in range(len(countyIndices)):
+            numCases = intvalues[indices[countyInd]]
+            county = strvalues[countyIndices[countyInd]]
             df = df.append( {
                     'County' : county ,
                     'State' : state,
@@ -192,6 +194,7 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
                     'Deaths': 0,
                     'Recovered': 0} , ignore_index=True)
     else:
+        counties = dpath.util.get(jsonResult, scrapeParams['countyListDpath'])
         for countyJson in counties:
             county = dpath.util.get(countyJson, scrapeParams['countyDpath'])
 

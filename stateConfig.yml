@@ -119,6 +119,8 @@ states:
       countyDpath: '/'
       objSep: '\d+;'
       listIndexLookup:
+        countyValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+        countyIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Counts/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/2/aliasIndices'
         casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
         casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Counts/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/1/aliasIndices'
   Louisiana:
@@ -195,6 +197,23 @@ states:
     type: 'table'
     url: 'https://cv.nmhealth.org/cases-by-county/'
     scrapeParams: {}
+  New York:
+    type: 'api-json'
+    url: 'https://covid19tracker.health.ny.gov/vizql/w/NYS-COVID19-Tracker/v/NYSDOHCOVID-19Tracker-TableView/bootstrapSession/sessions/{{SESSION_ID}}'
+    doEstablishAndExtractSession:
+      sessionEstablishUrl: 'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Map?%3Aembed=yes&%3Atoolbar=no'
+      sessionIdHeader: 'x-session-id'
+      formData:
+        sheet_id: 'NYSDOH%20COVID-19%20Tracker%20-%20Map'
+    scrapeParams:
+      countyListDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+      countyDpath: '/'
+      objSep: '\d+;'
+      listIndexLookup:
+        countyValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/2/dataValues'
+        countyIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Selector Tablet/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/1/aliasIndices'
+        casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
+        casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Selector Tablet/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/2/aliasIndices'
   North Carolina:
     type: 'api-json'
     url: 'https://services.arcgis.com/iFBq2AW9XO0jYYF7/arcgis/rest/services/NCCovid19/FeatureServer/0/query?f=json&where=county%3C%3E%27%27&returnGeometry=false&outFields=*'
