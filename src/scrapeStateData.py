@@ -177,7 +177,7 @@ def scrapeApiJson(scrapeParams, state, pagecontent):
     if 'listIndexLookup' in scrapeParams:
         indexLookupParams = scrapeParams['listIndexLookup']
         strvalues = dpath.util.get(jsonResult, indexLookupParams['countyValuesDpath'])
-        print(strvalues)
+        print(strvalues, strvalues.index('Fairfax'), strvalues.index('Western Tidewater'))
         countyIndices = dpath.util.get(jsonResult, indexLookupParams['countyIndicesDpath'])
         print(countyIndices)
 

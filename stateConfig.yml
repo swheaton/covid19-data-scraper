@@ -353,6 +353,23 @@ states:
     scrapeParams:
       countyCol: 'Jurisdiction'
       footerRowsToSkip: 1
+  Virginia:
+    type: 'api-json'
+    url: 'https://public.tableau.com/vizql/w/VirginiaCOVID-19Dashboard/v/VirginiaCOVID-19Dashboard/bootstrapSession/sessions/{{SESSION_ID}}'
+    doEstablishAndExtractSession:
+      sessionEstablishUrl: 'https://public.tableau.com/views/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard?%3Aembed=y&%3AshowVizHome=no'
+      sessionIdHeader: 'x-session-id'
+      formData:
+        sheet_id: 'Virginia%20COVID-19%20Dashboard'
+    scrapeParams:
+      countyListDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/1/dataValues'
+      countyDpath: '/'
+      objSep: '\d+;'
+      listIndexLookup:
+        countyValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/2/dataValues'
+        countyIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/Case Map/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/6/aliasIndices'
+        casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
+        casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/Case Map/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/3/aliasIndices'
   Washington:
     type: 'table'
     url: 'https://www.doh.wa.gov/Emergencies/Coronavirus'
@@ -387,7 +404,6 @@ nocountyinfo:
 
 tableau:
   - Colorado: 'https://public.tableau.com/profile/cocdphe.svc#!/vizhome/COVID19_CaseSummary/COVID-19CaseSummary'
-  - Virginia: 'https://public.tableau.com/profile/vdh.population.health#!/vizhome/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard'
   - Ohio: 'https://public.tableau.com/views/OverviewDashboard_15852499073250/DashboardOverview_1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=no&:showAppBanner=false&iframeSizedToWindow=true&:loadOrderID=0'
 
 powerbi:
