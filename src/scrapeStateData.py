@@ -42,24 +42,28 @@ def getSiteContent(url):
     return content
 
 
-def mangleDateInUrl(stateConfig):
-    date = datetime.today()# - timedelta(days=1)
-    zeroPad = getOrDefault(stateConfig, 'zeroPad', 'none')
+def mangleDateInUrl(dateInUrlConfig, url):
+    yesterday = getOrDefault(dateInUrlConfig, 'yesterday', False)
+    date = datetime.today()
+    if yesterday:
+        date = date - timedelta(days=1)
+    zeroPad = getOrDefault(dateInUrlConfig, 'zeroPad', 'none')
+    outDate = ''
     if zeroPad == 'none':
-        outDate = date.strftime(stateConfig['dateFormat'])
+        outDate = date.strftime(dateInUrlConfig['dateFormat'])
     elif zeroPad == 'first':
-        tokens = stateConfig['dateFormat'].split('%')
+        tokens = dateInUrlConfig['dateFormat'].split('%')
         outDate = tokens[0] + date.strftime('%'+tokens[1]).lstrip('0') + date.strftime('%' + '%'.join(tokens[2:]))
     elif zeroPad == 'all':
-        tokens = stateConfig['dateFormat'].split('%')
+        tokens = dateInUrlConfig['dateFormat'].split('%')
         outDate = tokens[0]
         tokens = tokens[1:]
         for token in tokens:
             outDate = outDate + date.strftime('%'+token).lstrip('0')
 
-    if getOrDefault(stateConfig, 'toLower', False):
+    if getOrDefault(dateInUrlConfig, 'toLower', False):
         outDate = outDate.lower()
-    mangledUrl = stateConfig['url'].replace('{{INSERT_DATE}}', outDate)
+    mangledUrl = url.replace('{{INSERT_DATE}}', outDate)
     print(mangledUrl)
     return mangledUrl
 
@@ -105,6 +109,8 @@ def scrapeHtmlTable(stateConfig, state, pagecontent):
         df['Cases'] = df['Cases'].str.replace('\u200b', '')
         df['Cases'] = df['Cases'].str.replace('<5', getOrDefault(stateConfig, 'replaceLess5', '1'))
         df['Cases'] = df['Cases'].str.extract('(?P<Cases>\d*)')
+    else:
+        df['Cases'].fillna(0, inplace=True)
 
     print(df)
     # Remove all extraneous columns
@@ -361,16 +367,16 @@ with open('stateConfig.yml') as configFile:
             print('Unsupported type', type)
             continue
 
-        if getOrDefault(stateConfig, 'dateInUrl', False):
-            stateConfig['url'] = mangleDateInUrl(stateConfig)
+        if 'dateInUrl' in stateConfig:
+            stateConfig['url'] = mangleDateInUrl(stateConfig['dateInUrl'], stateConfig['url'])
 
-        if 'doJsRender' in stateConfig and stateConfig['doJsRender']:
-            sleepAfterRender = getOrDefault(stateConfig, 'sleepAfterRender', 5)
+        if 'doJsRender' in stateConfig:
+            sleepAfterRender = getOrDefault(stateConfig['doJsRender'], 'sleepAfterRender', 5)
             pagecontent = doJsRender(stateConfig['url'], sleepAfterRender)
         else:
             pagecontent = getSiteContent(stateConfig['url'])
 
-        statedf = scrapeFuncs[type](stateConfig, state, pagecontent)
+        statedf = scrapeFuncs[type](stateConfig['scrapeParams'], state, pagecontent)
         statedf = statedf.astype({'Deaths': 'int64', 'Cases': 'int64', 'Recovered': 'int64'})
         statedf = statedf[['County', 'State', 'Cases', 'Deaths', 'Recovered']]
 
