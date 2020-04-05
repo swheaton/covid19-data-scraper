@@ -151,12 +151,12 @@ states:
       deathsDpath: 'deaths'
   Indiana:
     type: 'api-json'
-    url: 'https://services5.arcgis.com/f2aRfVsQG7TInso2/arcgis/rest/services/County_COVID19/FeatureServer/0/query?f=json&where=COUNTYNAME%3C%3E%27%27&returnGeometry=false&outfields=*'
+    url: 'https://coronavirus.in.gov/map-test/covid-19-indiana-daily-report-current.topojson'
     scrapeParams:
-      countyListDpath: 'features'
-      countyDpath: 'attributes/COUNTYNAME'
-      casesDpath: 'attributes/Total_Positive'
-      deathsDpath: 'attributes/Total_Deaths'
+      countyListDpath: 'objects/cb_2015_indiana_county_20m/geometries'
+      countyDpath: 'properties/NAME'
+      casesDpath: 'properties/COVID_COUNT'
+      deathsDpath: 'properties/COVID_DEATHS'
   Iowa:
     type: 'api-json'
     url: 'https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IA_COVID19_Cases/FeatureServer/0/query?f=json&where=Name%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -368,9 +368,7 @@ states:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     scrapeParams:
-      casesCol: 'positive'
-      countyCol: 'Unnamed: 0'
-      deathsCol: 'deaths'
+      casesCol: 'Confirmed'
       tableIndex: 5
       footerRowsToSkip: 1
   Texas:
