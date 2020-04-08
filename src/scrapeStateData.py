@@ -272,9 +272,12 @@ def scrapeCsv(scrapeParams, state, pagecontent):
     casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
     columnRename = dict(zip((countyCol, casesCol), ('County', 'Cases')))
     df.rename(columns=columnRename, inplace=True)
+    df['Cases'].fillna(0, inplace=True)
     df['Deaths'] = 0
     df['Recovered'] = 0
     df['State'] = state
+
+    print(df)
     return df
 
 
@@ -397,7 +400,7 @@ scrapeFuncs = {
     'text': scrapeText
 }
 
-needsRawContent = ['img', 'pdf', 'csv']
+needsRawContent = ['img', 'pdf']
 
 with open('stateConfig.yml') as configFile:
     pd.set_option('display.max_rows', None)

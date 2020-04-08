@@ -42,13 +42,11 @@ states:
       deathsDpath: 'attributes/deaths'
       recoveredDpath: 'attributes/Recoveries'
   California:
-    type: 'api-json'
-    url: 'https://data.chhs.ca.gov/api/3/action/datastore_search?resource_id=cd7ff27d-ac5d-419d-b850-5f6098dbfccc&limit=5000'
+    type: 'csv'
+    url: 'https://data.chhs.ca.gov/dataset/6882c390-b2d7-4b9a-aefa-2068cee63e47/resource/6cd8d424-dfaa-4bdd-9410-a3d656e1176e/download/covid-19-data.csv'
     scrapeParams:
-      countyListDpath: 'result/records'
-      countyDpath: 'County Name'
-      casesDpath: 'Total Count Confirmed'
-      deathsDpath: 'Total Count Deaths'
+      countyCol: 'County Name'
+      casesCol: 'Total Count Confirmed'
   Colorado:
     type: 'api-json'
     url: 'https://public.tableau.com/vizql/w/COVID19_CaseSummary/v/Textcasescounty/bootstrapSession/sessions/{{SESSION_ID}}'
@@ -124,7 +122,7 @@ states:
       casesCol: 'Total'
       footerRowsToSkip: 5
   Idaho:
-    type: 'api-json'
+    type: 'skipapi-json'
     url: 'https://public.tableau.com/vizql/w/DPHIdahoCOVID-19Dashboard_V2/v/DPHCOVID19Dashboard2/bootstrapSession/sessions/{{SESSION_ID}}'
     doEstablishAndExtractSession:
       sessionEstablishUrl: 'https://public.tableau.com/views/DPHIdahoCOVID-19Dashboard_V2/DPHCOVID19Dashboard2?%3Aembed=y&%3AshowVizHome=no'
@@ -346,7 +344,7 @@ states:
     scrapeParams:
       casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
       countyCol: 'City/Town'
-      tableIndex: 8
+      tableIndex: 9
       replaceLess5: '1'
   South Carolina:
     type: 'api-json'
@@ -368,7 +366,7 @@ states:
     type: 'table'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     scrapeParams:
-      casesCol: 'Confirmed'
+      casesCol: 'Positive'
       tableIndex: 5
       footerRowsToSkip: 1
   Texas:
