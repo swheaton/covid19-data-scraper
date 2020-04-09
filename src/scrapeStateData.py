@@ -254,7 +254,11 @@ def scrapeText(scrapeParams, state, pagecontent):
             caseIndex = 2
         if not dataTuple[-1].isdigit():
             dataTuple.append(0)
-
+            if newInParen:
+                dataTuple.append(0)
+        elif newInParen and not dataTuple[-2].isdigit():
+            dataTuple.append(0)
+        print(dataTuple)
         df = df.append({
             'County': ' '.join(dataTuple[0:len(dataTuple)-caseIndex]),
             'State': state,

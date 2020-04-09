@@ -294,10 +294,10 @@ states:
       casesDpath: 'attributes/Total'
       deathsDpath: 'attributes/Deaths'
   North Dakota:
-    type: 'table'
-    url: 'https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases'
+    type: 'csv'
+    url: 'https://static.dwcdn.net/data/yuhr0.csv?v=1586391536111'
     scrapeParams:
-      casesCol: 'Positive  Cases'
+      casesCol: 'Total Positive'
   Ohio:
     type: 'api-json'
     url: 'https://public.tableau.com/vizql/w/OverviewDashboard_15852499073250/v/DashboardOverview_1/bootstrapSession/sessions/{{SESSION_ID}}'
@@ -367,7 +367,7 @@ states:
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     scrapeParams:
       casesCol: 'Positive'
-      tableIndex: 5
+      tableIndex: 8
       footerRowsToSkip: 1
   Texas:
     type: 'api-json'
@@ -423,8 +423,9 @@ states:
     type: 'text'
     url: 'https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/'
     scrapeParams:
-      dataXpath: '//*[@id="et-boc"]/div/div/div/div[4]/div[2]/div/div/p'
-      startDelim: 'Cases by County</strong><br>'
+      dataXpath: '//*[@id="et-boc"]/div/div/div/div[4]/div[2]/div/div/p[2]'
+      startDelim: '<p>'
+      newInParen: true
       sentinel: '</p>'
       eltDelim: '<br>'
 
