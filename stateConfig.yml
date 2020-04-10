@@ -226,7 +226,7 @@ states:
     type: 'table'
     url: 'https://www.health.state.mn.us/diseases/coronavirus/situation.html'
     scrapeParams:
-      tableIndex: 3
+      tableIndex: 9
   Mississippi:
     type: 'table'
     url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
@@ -363,7 +363,7 @@ states:
       recoveredCol: '# Recovered'
       footerRowsToSkip: 1
   Tennessee:
-    type: 'table'
+    type: 'skiptable'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
     scrapeParams:
       casesCol: 'Positive'
