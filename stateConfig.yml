@@ -195,7 +195,7 @@ states:
     scrapeParams:
       countyCol: 'County1'
       tableIndex: 1
-      headerRowsToSkip: 2
+      headerRowsToSkip: 1
       casesCol: 'Confirmed'
   Maryland:
     type: 'api-json'
