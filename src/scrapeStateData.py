@@ -97,7 +97,10 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
 
     tableIndex = getOrDefault(scrapeParams, 'tableIndex', 0)
     headerRowsToSkip = getOrDefault(scrapeParams, 'headerRowsToSkip', 0)
-    df = pd.read_html(html, skiprows=headerRowsToSkip, header=0)[tableIndex]
+    
+    dfs = pd.read_html(html, skiprows=headerRowsToSkip, header=0)
+    print('# of tables: ', len(dfs))
+    df = dfs[tableIndex]
 
     # Drop last (total col) if needed
     footerRowsToSkip = getOrDefault(scrapeParams, 'footerRowsToSkip', 0)
@@ -108,6 +111,8 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
     # Some random unhelpful unicode characters
     df.columns = df.columns.str.replace('\u200b', '')
     df.columns = df.columns.str.replace('\u0080', '')
+
+    print(df)
 
     countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
     casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')

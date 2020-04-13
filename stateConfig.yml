@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 7
+      pageOfTable: 10
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -109,7 +109,7 @@ states:
     type: 'table'
     url: 'https://d20s4vd27d0hk0.cloudfront.net/?initialWidth=746&childId=covid19dashdph&parentTitle=COVID-19%20Daily%20Status%20Report%20%7C%20Georgia%20Department%20of%20Public%20Health&parentUrl=https%3A%2F%2Fdph.georgia.gov%2Fcovid-19-daily-status-report'
     scrapeParams:
-      tableIndex: 5
+      tableIndex: 7
       casesCol: 'No. Cases'
       deathsCol: 'No. Deaths'
       countyCol: 'COVID-19 Confirmed Cases By County:'
@@ -340,7 +340,7 @@ states:
     type: 'table'
     url: 'https://health.ri.gov/data/covid-19/'
     doJsRender:
-      sleepAfterRender: 10
+      sleepAfterRender: 15
     scrapeParams:
       casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
       countyCol: 'City/Town'
