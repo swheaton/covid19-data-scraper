@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 10
+      pageOfTable: 7
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
