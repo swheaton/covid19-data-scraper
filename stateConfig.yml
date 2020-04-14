@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 10
+      pageOfTable: 6
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -344,7 +344,7 @@ states:
     scrapeParams:
       casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
       countyCol: 'City/Town'
-      tableIndex: 9
+      tableIndex: 5
       replaceLess5: '1'
   South Carolina:
     type: 'api-json'
