@@ -194,7 +194,7 @@ states:
     url: 'https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml'
     scrapeParams:
       countyCol: 'County1'
-      tableIndex: 1
+      tableIndex: 2
       headerRowsToSkip: 1
       casesCol: 'Confirmed'
   Maryland:
@@ -336,16 +336,6 @@ states:
     scrapeParams:
       casesCol: 'Number of Cases'
       tableIndex: 3
-  Rhode Island:
-    type: 'table'
-    url: 'https://health.ri.gov/data/covid-19/'
-    doJsRender:
-      sleepAfterRender: 15
-    scrapeParams:
-      casesCol: 'Rhode Island COVID-19 patients by city/town of residence'
-      countyCol: 'City/Town'
-      tableIndex: 5
-      replaceLess5: '1'
   South Carolina:
     type: 'api-json'
     url: 'https://services2.arcgis.com/XZg2efAbaieYAXmu/arcgis/rest/services/Covid19_Cases_Centroid_SharingView/FeatureServer/0/query?f=json&where=NAME%3C%3E%27%27&returnGeometry=false&outFields=*'
@@ -436,6 +426,7 @@ nocountyinfo:
   - Kentucky 'https://govstatus.egov.com/kycovid19'
 
 powerbi:
+  - Rhode Island: 'https://health.ri.gov/data/covid-19/'
   - West Virginia: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
 
 image:
