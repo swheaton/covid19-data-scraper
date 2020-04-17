@@ -105,6 +105,7 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
     # Drop last (total col) if needed
     footerRowsToSkip = getOrDefault(scrapeParams, 'footerRowsToSkip', 0)
     if footerRowsToSkip != 0:
+        print('skipping', footerRowsToSkip)
         df = df[:-footerRowsToSkip]
 
     assert isinstance(df.columns.str, object)

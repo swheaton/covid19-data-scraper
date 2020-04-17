@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 10
+      pageOfTable: 7
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -232,7 +232,9 @@ states:
     type: 'table'
     url: 'https://msdh.ms.gov/msdhsite/_static/14,0,420.html#Mississippi'
     scrapeParams:
-      footerRowsTo Skip: 1
+      casesCol: 'Total Cases'
+      deathsCol: 'Total Deaths'
+      footerRowsToSkip: 1
   Missouri:
     type: 'table'
     url: 'https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php'
@@ -339,7 +341,7 @@ states:
     type: 'table'
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
     scrapeParams:
-      casesCol: 'Number of Positives'
+      casesCol: 'Positives'
       tableIndex: 3
   South Carolina:
     type: 'api-json'
