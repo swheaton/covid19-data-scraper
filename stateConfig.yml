@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 6
+      pageOfTable: 10
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -221,6 +221,7 @@ states:
     url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
     scrapeParams:
       deathsCol: 'Reported Deaths'
+      casesCol: 'Confirmed Cases'
       footerRowsToSkip: 1
   Minnesota:
     type: 'table'
@@ -265,9 +266,13 @@ states:
       countyDpath: 'attributes/COUNTY_LAB'
       casesDpath: 'attributes/TOTAL_CASES'
   New Mexico:
-    type: 'table'
-    url: 'https://cv.nmhealth.org/cases-by-county/'
-    scrapeParams: {}
+    type: 'api-json'
+    url: 'https://e7p503ngy5.execute-api.us-west-2.amazonaws.com/prod/GetCounties'
+    scrapeParams:
+        countyListDpath: 'data'
+        countyDpath: 'name'
+        casesDpath: 'cases'
+        deathsDpath: 'deaths'
   New York:
     type: 'api-json'
     url: 'https://covid19tracker.health.ny.gov/vizql/w/NYS-COVID19-Tracker/v/NYSDOHCOVID-19Tracker-TableView/bootstrapSession/sessions/{{SESSION_ID}}'
@@ -316,7 +321,7 @@ states:
         casesValuesDpath: '1/secondaryInfo/presModelMap/dataDictionary/presModelHolder/genDataDictionaryPresModel/dataSegments/0/dataColumns/0/dataValues'
         casesIndicesDpath: '1/secondaryInfo/presModelMap/vizData/presModelHolder/genPresModelMapPresModel/presModelMap/County Map | Total/presModelHolder/genVizDataPresModel/paneColumnsData/paneColumnsList/0/vizPaneColumns/2/aliasIndices'
   Oklahoma:
-    type: 'table'
+    type: 'skiptable'
     url: 'https://coronavirus.health.ok.gov'
     scrapeParams:
       footerRowsToSkip: 1
@@ -334,7 +339,7 @@ states:
     type: 'table'
     url: 'https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx'
     scrapeParams:
-      casesCol: 'Number of Cases'
+      casesCol: 'Number of Positives'
       tableIndex: 3
   South Carolina:
     type: 'api-json'
