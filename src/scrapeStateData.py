@@ -148,6 +148,7 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
             df['Deaths'].replace('', 0, inplace=True)
             df['Deaths'].replace('-', 0, inplace=True)
             df['Deaths'].replace(b'\xe2\x80\x94'.decode('utf-8'), 0, inplace=True)
+            df['Deaths'] = df['Deaths'].str.extract('(?P<Deaths>\d*)')
         df['Deaths'].fillna(0, inplace=True)
 
     # Add recovered column if not present
