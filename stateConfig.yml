@@ -73,7 +73,7 @@ states:
       dateFormat: '%m%d%Y'
       zeroPad: 'first'
     scrapeParams:
-      pageOfTable: 7
+      pageOfTable: 5
       countyCol: 'Town'
       sentinel: '*Data are preliminary and subject to change*'
   Delaware:
@@ -206,16 +206,16 @@ states:
       casesDpath: 'attributes/TotalCaseCount'
       deathsDpath: 'attributes/TotalDeathCount'
   Massachusetts:
-    type: 'pdf'
-    url: 'https://www.mass.gov/doc/covid-19-cases-in-massachusetts-as-of-{{INSERT_DATE}}/download'
+    type: 'skippdf'
+    url: 'https://www.mass.gov/doc/covid-19-dashboard-{{INSERT_DATE}}/download'
     dateInUrl:
       dateFormat: '%B-%d-%Y'
       zeroPad: 'all'
       toLower: true
     scrapeParams:
-      pageOfTable: 1
-      casesCol: ''
-      sentinel: 'Sex'
+      pageOfTable: 5
+      casesCol: 'Count'
+      sentinel: 'Total'
   Michigan:
     type: 'table'
     url: 'https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html'
@@ -351,14 +351,6 @@ states:
       countyDpath: 'attributes/NAME'
       casesDpath: 'attributes/Confirmed'
       deathsDpath: 'attributes/Death'
-  South Dakota:
-    type: 'table'
-    url: 'https://doh.sd.gov/news/Coronavirus.aspx'
-    scrapeParams:
-      tableIndex: 2
-      casesCol: 'Total Positive Cases'
-      recoveredCol: '# Recovered'
-      footerRowsToSkip: 1
   Tennessee:
     type: 'skiptable'
     url: 'https://www.tn.gov/health/cedep/ncov.html'
@@ -435,6 +427,7 @@ nocountyinfo:
 powerbi:
   - Rhode Island: 'https://health.ri.gov/data/covid-19/'
   - West Virginia: 'https://dhhr.wv.gov/COVID-19/Pages/default.aspx'
+  - South Dakota: 'https://doh.sd.gov/news/Coronavirus.aspx'
 
 image:
   - Vermont: 'https://www.healthvermont.gov/response/infectious-disease/2019-novel-coronavirus' # not easy
