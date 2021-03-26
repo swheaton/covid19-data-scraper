@@ -113,7 +113,7 @@ def scrapeHtmlTable(scrapeParams, state, pagecontent):
     df.columns = df.columns.str.replace('\u200b', '')
     df.columns = df.columns.str.replace('\u0080', '')
 
-    print(df)
+    print(df)ye
 
     countyCol = getOrDefault(scrapeParams, 'countyCol', 'County')
     casesCol = getOrDefault(scrapeParams, 'casesCol', 'Cases')
